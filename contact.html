@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Orbit Capital</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/contact.css" />
+    <link rel="icon" href="public/orbit.png" type="image/png" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <img
+              src="public/orbit white.png"
+              alt="Orbit Capital"
+              class="logo-img"
+            />
+            <span class="company-name">ORBIT CAPITAL</span>
+          </div>
+          <nav class="navigation">
+            <ul class="nav-menu">
+              <li><a href="index.html">HOME</a></li>
+              <li><a href="about.html">ABOUT</a></li>
+              <li><a href="portfolio.html">PORTFOLIO</a></li>
+              <li><a href="investments.html">INVESTMENTS</a></li>
+              <li><a href="team.html">TEAM</a></li>
+              <li><a href="contact.html" class="active">CONTACT</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="page-header-content">
+          <h1>CONTACT US</h1>
+          <p>Connect with Our Investment Team</p>
+        </div>
+      </section>
+
+      <!-- Contact Form Section -->
+      <section class="contact-form-section">
+        <div class="contact-content">
+          <div class="contact-info-side">
+            <h2>GET IN TOUCH</h2>
+            <p class="contact-intro">
+              We welcome discussions with innovative technology companies
+              seeking strategic capital and partnership. Our experienced team is
+              ready to explore how we can support your growth journey.
+            </p>
+
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="method-icon">ADDR</div>
+                <div class="method-info">
+                  <h3>Office Location</h3>
+                  <p>
+                    123 Financial District<br />New York, NY 10004<br />United
+                    States
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">PHONE</div>
+                <div class="method-info">
+                  <h3>Phone</h3>
+                  <p>+1 (555) 123-4567</p>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">EMAIL</div>
+                <div class="method-info">
+                  <h3>Email</h3>
+                  <p>info@orbitcapital.com</p>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">HOURS</div>
+                <div class="method-info">
+                  <h3>Business Hours</h3>
+                  <p>Monday - Friday<br />9:00 AM - 6:00 PM EST</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-side">
+            <form class="contact-form" id="contactForm">
+              <h2>SUBMIT YOUR PROPOSAL</h2>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name *</label>
+                  <input type="text" id="firstName" name="firstName" required />
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name *</label>
+                  <input type="text" id="lastName" name="lastName" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company Name *</label>
+                <input type="text" id="company" name="company" required />
+              </div>
+
+              <div class="form-group">
+                <label for="title">Your Title *</label>
+                <input type="text" id="title" name="title" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="stage">Funding Stage *</label>
+                  <select id="stage" name="stage" required>
+                    <option value="">Select Stage</option>
+                    <option value="seed">Seed</option>
+                    <option value="series-a">Series A</option>
+                    <option value="series-b">Series B</option>
+                    <option value="series-c">Series C</option>
+                    <option value="growth">Growth/Later Stage</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="sector">Technology Sector *</label>
+                  <select id="sector" name="sector" required>
+                    <option value="">Select Sector</option>
+                    <option value="ai">Artificial Intelligence</option>
+                    <option value="fintech">Fintech</option>
+                    <option value="enterprise">Enterprise Software</option>
+                    <option value="healthcare">Healthcare Tech</option>
+                    <option value="security">Cybersecurity</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="amount">Funding Amount Sought</label>
+                <input
+                  type="text"
+                  id="amount"
+                  name="amount"
+                  placeholder="e.g., $10M"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Business Description *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  required
+                  placeholder="Please provide a brief description of your company, technology, market opportunity, and current traction."
+                ></textarea>
+              </div>
+
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="privacy" name="privacy" required />
+                <label for="privacy" class="checkbox-label">
+                  I agree to the
+                  <a href="#" class="privacy-link">Privacy Policy</a> and
+                  consent to the processing of my personal data.
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary form-submit">
+                SUBMIT PROPOSAL
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Office Locations -->
+      <section class="office-locations">
+        <div class="locations-content">
+          <h2 class="section-title">OFFICE LOCATIONS</h2>
+          <div class="locations-grid">
+            <div class="location-card">
+              <h3>New York (Headquarters)</h3>
+              <div class="location-details">
+                <p>ADDRESS: 123 Financial District<br />New York, NY 10004</p>
+                <p>PHONE: +1 (555) 123-4567</p>
+                <p>EMAIL: ny@orbitcapital.com</p>
+              </div>
+              <div class="location-team">
+                <h4>Key Personnel:</h4>
+                <p>James Mitchell, Sarah Chen, Michael Rodriguez</p>
+              </div>
+            </div>
+
+            <div class="location-card">
+              <h3>San Francisco</h3>
+              <div class="location-details">
+                <p>ADDRESS: 456 Sand Hill Road<br />Palo Alto, CA 94301</p>
+                <p>PHONE: +1 (555) 987-6543</p>
+                <p>EMAIL: sf@orbitcapital.com</p>
+              </div>
+              <div class="location-team">
+                <h4>Key Personnel:</h4>
+                <p>Alex Kim, Lisa Thompson</p>
+              </div>
+            </div>
+
+            <div class="location-card">
+              <h3>London</h3>
+              <div class="location-details">
+                <p>ADDRESS: 789 Canary Wharf<br />London E14 5AB, UK</p>
+                <p>PHONE: +44 20 7123 4567</p>
+                <p>EMAIL: london@orbitcapital.com</p>
+              </div>
+              <div class="location-team">
+                <h4>Key Personnel:</h4>
+                <p>David Wang, Rachel Johnson</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="faq-content">
+          <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>What types of companies does Orbit Capital invest in?</h3>
+                <span class="faq-toggle">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  We focus exclusively on technology companies across various
+                  stages, from seed to growth. Our primary sectors include
+                  artificial intelligence, fintech, enterprise software,
+                  cybersecurity, and healthcare technology.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>What is your typical investment range?</h3>
+                <span class="faq-toggle">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Our investment amounts range from $5M for seed stage companies
+                  to $50M+ for growth stage opportunities, depending on the
+                  company's needs and growth stage.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>How long does the investment process take?</h3>
+                <span class="faq-toggle">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Our due diligence process typically takes 8-12 weeks from
+                  initial proposal to final investment decision, depending on
+                  the complexity of the opportunity.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>Do you provide follow-on funding?</h3>
+                <span class="faq-toggle">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Yes, we actively support our portfolio companies with
+                  follow-on funding in subsequent rounds and can introduce them
+                  to additional investors when needed.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>What geographic regions do you invest in?</h3>
+                <span class="faq-toggle">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  We invest primarily in North America and Europe, with
+                  selective investments in other regions with strong technology
+                  ecosystems.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="public/orbit white.png"
+                alt="Orbit Capital"
+                class="footer-logo-img"
+              />
+              <span>ORBIT CAPITAL</span>
+            </div>
+            <p class="footer-description">
+              Premier technology investment firm committed to accelerating
+              innovation through strategic capital and expertise.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>QUICK LINKS</h4>
+            <ul class="footer-links">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="portfolio.html">Portfolio</a></li>
+              <li><a href="investments.html">Investments</a></li>
+              <li><a href="team.html">Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>CONTACT INFO</h4>
+            <div class="contact-info">
+              <p>ADDRESS: 123 Financial District<br />New York, NY 10004</p>
+              <p>PHONE: +1 (555) 123-4567</p>
+              <p>EMAIL: info@orbitcapital.com</p>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>CONNECT</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">LinkedIn</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">Bloomberg</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Orbit Capital. All rights reserved. | Privacy Policy |
+            Terms of Service
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/contact.js"></script>
+  </body>
+</html>

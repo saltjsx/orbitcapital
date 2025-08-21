@@ -1,0 +1,336 @@
+/* Home Page Specific Styles */
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    color: #ffffff;
+    padding: 80px 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 50px,
+            rgba(187, 23, 23, 0.05) 50px,
+            rgba(187, 23, 23, 0.05) 100px
+        );
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    margin-bottom: 40px;
+    color: #cccccc;
+    letter-spacing: 1px;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(187, 23, 23, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(187, 23, 23, 0.3);
+}
+
+.stat {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #BB1717;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #cccccc;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.hero-image {
+    text-align: center;
+}
+
+.orbit-logo {
+    max-width: 200px;
+    height: auto;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 20px rgba(187, 23, 23, 0.3));
+}
+
+/* Features Section */
+.features {
+    padding: 80px 30px;
+    background-color: #ffffff;
+}
+
+.features-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.feature-card {
+    padding: 40px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.feature-card:hover {
+    border-color: #BB1717;
+    box-shadow: 0 8px 25px rgba(187, 23, 23, 0.15);
+    transform: translateY(-3px);
+}
+
+.feature-icon {
+    margin-bottom: 25px;
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #BB1717 0%, #8B0000 100%);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(187, 23, 23, 0.3);
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.feature-card h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.feature-card p {
+    color: #666666;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* News Section */
+.news {
+    padding: 80px 30px;
+    background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+}
+
+.news-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.news-item {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.news-item:hover {
+    box-shadow: 0 8px 25px rgba(187, 23, 23, 0.15);
+    border-color: #BB1717;
+    transform: translateY(-3px);
+}
+
+.news-date {
+    font-size: 12px;
+    color: #BB1717;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.news-item h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.news-item p {
+    color: #666666;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.read-more {
+    color: #BB1717;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.read-more:hover {
+    color: #8B0000;
+}
+
+/* Responsive Design for Home Page */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+    
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .features,
+    .news {
+        padding: 60px 20px;
+    }
+    
+    .feature-card {
+        padding: 30px;
+    }
+    
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 9px;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+        line-height: 1.1;
+    }
+    
+    .news-item {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 15px;
+    }
+    
+    .hero-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .features,
+    .news {
+        padding: 40px 15px;
+    }
+    
+    .orbit-logo {
+        max-width: 150px;
+    }
+}

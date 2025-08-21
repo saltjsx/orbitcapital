@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Orbit Capital</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/portfolio.css" />
+    <link rel="icon" href="public/orbit.png" type="image/png" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <img
+              src="public/orbit white.png"
+              alt="Orbit Capital"
+              class="logo-img"
+            />
+            <span class="company-name">ORBIT CAPITAL</span>
+          </div>
+          <nav class="navigation">
+            <ul class="nav-menu">
+              <li><a href="index.html">HOME</a></li>
+              <li><a href="about.html">ABOUT</a></li>
+              <li><a href="portfolio.html" class="active">PORTFOLIO</a></li>
+              <li><a href="investments.html">INVESTMENTS</a></li>
+              <li><a href="team.html">TEAM</a></li>
+              <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="page-header-content">
+          <h1>OUR PORTFOLIO</h1>
+          <p>12 Exceptional Technology Companies Driving Innovation</p>
+        </div>
+      </section>
+
+      <!-- Portfolio Stats -->
+      <section class="portfolio-stats">
+        <div class="stats-content">
+          <div class="stat-card">
+            <span class="stat-number">12</span>
+            <span class="stat-label">Portfolio Companies</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">$350M+</span>
+            <span class="stat-label">Total Invested</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Successful Exits</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">47%</span>
+            <span class="stat-label">YoY Revenue Growth</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Portfolio Filter -->
+      <section class="portfolio-filter">
+        <div class="filter-content">
+          <h2>FILTER BY SECTOR</h2>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="ai">
+              ARTIFICIAL INTELLIGENCE
+            </button>
+            <button class="filter-btn" data-filter="fintech">FINTECH</button>
+            <button class="filter-btn" data-filter="enterprise">
+              ENTERPRISE SOFTWARE
+            </button>
+            <button class="filter-btn" data-filter="healthcare">
+              HEALTHCARE TECH
+            </button>
+            <button class="filter-btn" data-filter="security">
+              CYBERSECURITY
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Portfolio Companies -->
+      <section class="portfolio-companies">
+        <div class="companies-grid">
+          <!-- AI Companies -->
+          <div class="company-card" data-category="ai">
+            <div class="company-header">
+              <div class="company-logo">AI</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>NeuralVision Technologies</h3>
+            <p class="company-description">
+              Advanced computer vision and machine learning platform for
+              autonomous systems.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2023</span>
+              <span class="investment-amount">$45M Series B</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Artificial Intelligence</span>
+              <span class="tag">Computer Vision</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="ai">
+            <div class="company-header">
+              <div class="company-logo">QC</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>QuantumCore AI</h3>
+            <p class="company-description">
+              Quantum-enhanced machine learning algorithms for financial
+              modeling and risk analysis.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2024</span>
+              <span class="investment-amount">$30M Series A</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Artificial Intelligence</span>
+              <span class="tag">Quantum Computing</span>
+            </div>
+          </div>
+
+          <!-- Fintech Companies -->
+          <div class="company-card" data-category="fintech">
+            <div class="company-header">
+              <div class="company-logo">FP</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>FlexPay Solutions</h3>
+            <p class="company-description">
+              Next-generation payment processing platform for enterprise B2B
+              transactions.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2022</span>
+              <span class="investment-amount">$25M Series A</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Fintech</span>
+              <span class="tag">Payments</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="fintech">
+            <div class="company-header">
+              <div class="company-logo">DT</div>
+              <div class="company-status exited">Exited</div>
+            </div>
+            <h3>DigitalTrade</h3>
+            <p class="company-description">
+              Blockchain-based trade finance platform for international
+              commerce.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2021</span>
+              <span class="investment-amount">$40M Series B</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Fintech</span>
+              <span class="tag">Blockchain</span>
+            </div>
+          </div>
+
+          <!-- Enterprise Software -->
+          <div class="company-card" data-category="enterprise">
+            <div class="company-header">
+              <div class="company-logo">WS</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>WorkStream Analytics</h3>
+            <p class="company-description">
+              Enterprise workflow optimization and analytics platform for large
+              organizations.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2023</span>
+              <span class="investment-amount">$35M Series B</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Enterprise Software</span>
+              <span class="tag">Analytics</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="enterprise">
+            <div class="company-header">
+              <div class="company-logo">CS</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>CloudSync Pro</h3>
+            <p class="company-description">
+              Multi-cloud orchestration and management platform for enterprise
+              IT infrastructure.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2024</span>
+              <span class="investment-amount">$20M Series A</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Enterprise Software</span>
+              <span class="tag">Cloud Infrastructure</span>
+            </div>
+          </div>
+
+          <!-- Healthcare Tech -->
+          <div class="company-card" data-category="healthcare">
+            <div class="company-header">
+              <div class="company-logo">MD</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>MedData Insights</h3>
+            <p class="company-description">
+              AI-powered healthcare data analytics platform for clinical
+              decision support.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2023</span>
+              <span class="investment-amount">$28M Series A</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Healthcare Tech</span>
+              <span class="tag">AI Analytics</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="healthcare">
+            <div class="company-header">
+              <div class="company-logo">TR</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>TeleRehab Connect</h3>
+            <p class="company-description">
+              Virtual rehabilitation and physical therapy platform with IoT
+              integration.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2024</span>
+              <span class="investment-amount">$15M Seed</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Healthcare Tech</span>
+              <span class="tag">Telemedicine</span>
+            </div>
+          </div>
+
+          <!-- Cybersecurity -->
+          <div class="company-card" data-category="security">
+            <div class="company-header">
+              <div class="company-logo">SS</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>SecureShield Systems</h3>
+            <p class="company-description">
+              Advanced threat detection and response platform for enterprise
+              cybersecurity.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2022</span>
+              <span class="investment-amount">$50M Series C</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Threat Detection</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="security">
+            <div class="company-header">
+              <div class="company-logo">ZT</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>ZeroTrust Networks</h3>
+            <p class="company-description">
+              Zero-trust network security architecture for distributed
+              enterprise environments.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2024</span>
+              <span class="investment-amount">$32M Series B</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Network Security</span>
+            </div>
+          </div>
+
+          <!-- Additional Companies -->
+          <div class="company-card" data-category="ai">
+            <div class="company-header">
+              <div class="company-logo">AL</div>
+              <div class="company-status exited">Exited</div>
+            </div>
+            <h3>AutoLogistics AI</h3>
+            <p class="company-description">
+              Machine learning platform for supply chain optimization and
+              logistics management.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2020</span>
+              <span class="investment-amount">$22M Series A</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Artificial Intelligence</span>
+              <span class="tag">Logistics</span>
+            </div>
+          </div>
+
+          <div class="company-card" data-category="enterprise">
+            <div class="company-header">
+              <div class="company-logo">DP</div>
+              <div class="company-status">Active</div>
+            </div>
+            <h3>DataPipe Technologies</h3>
+            <p class="company-description">
+              Real-time data streaming and processing platform for enterprise
+              applications.
+            </p>
+            <div class="company-meta">
+              <span class="investment-year">2025</span>
+              <span class="investment-amount">$18M Seed</span>
+            </div>
+            <div class="company-tags">
+              <span class="tag">Enterprise Software</span>
+              <span class="tag">Data Processing</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="public/orbit white.png"
+                alt="Orbit Capital"
+                class="footer-logo-img"
+              />
+              <span>ORBIT CAPITAL</span>
+            </div>
+            <p class="footer-description">
+              Premier technology investment firm committed to accelerating
+              innovation through strategic capital and expertise.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>QUICK LINKS</h4>
+            <ul class="footer-links">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="portfolio.html">Portfolio</a></li>
+              <li><a href="investments.html">Investments</a></li>
+              <li><a href="team.html">Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>CONTACT INFO</h4>
+            <div class="contact-info">
+              <p>ADDRESS: 123 Financial District<br />New York, NY 10004</p>
+              <p>PHONE: +1 (555) 123-4567</p>
+              <p>EMAIL: info@orbitcapital.com</p>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>CONNECT</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">LinkedIn</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">Bloomberg</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Orbit Capital. All rights reserved. | Privacy Policy |
+            Terms of Service
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/portfolio.js"></script>
+  </body>
+</html>
