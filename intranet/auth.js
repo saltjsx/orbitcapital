@@ -73,6 +73,13 @@
       dept: "Human Resources",
       email: "hr@orbitcapital.com",
     },
+    brodielam: {
+      password: "1234",
+      displayName: "Brodie L.",
+      role: "Intern",
+      dept: "Useless Crap",
+      email: "bugbrodie@gmail.com",
+    },
   };
 
   var sessionKey = "orbit_session";
