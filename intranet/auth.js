@@ -80,6 +80,13 @@
       dept: "Useless Crap",
       email: "bugbrodie@gmail.com",
     },
+    sethlam: {
+      password: "p3n1534t3r",
+      displayName: "Seth Lamprecht",
+      role: "Sucking Corporate Dick",
+      dept: "'Entertainment' Department*",
+      email: "seth@idiot.gov",
+    },
   };
 
   var sessionKey = "orbit_session";
