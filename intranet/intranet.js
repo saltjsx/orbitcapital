@@ -44,8 +44,8 @@ var Portal = (function () {
     },
     {
       name: "Portfolio DB",
-      status: "Degraded",
-      badge: "warn",
+      status: "Operational",
+      badge: "ok",
       latency: "189ms",
     },
     {
@@ -56,8 +56,8 @@ var Portal = (function () {
     },
     {
       name: "HR Module",
-      status: "Offline (Maintenance)",
-      badge: "err",
+      status: "Operational",
+      badge: "ok",
       latency: "--",
     },
     {
