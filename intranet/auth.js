@@ -1,93 +1,38 @@
 // Orbit Intranet Authentication (Client-side only)
-// Early 2000s style: global object, minimal encapsulation
+// Early 2000s style: global object, now loading credentials from external JSON for easier maintenance.
 (function (global) {
-  var credentialStore = {
-    // username: { password, displayName, role, dept, email }
-    jmitchell: {
-      password: "orbitCEO!",
-      displayName: "James Mitchell",
-      role: "CEO",
-      dept: "Executive",
-      email: "j.mitchell@orbitcapital.com",
-    },
-    schen: {
-      password: "partnerAI#",
-      displayName: "Sarah Chen",
-      role: "Senior Partner",
-      dept: "Investments",
-      email: "s.chen@orbitcapital.com",
-    },
-    mrodriguez: {
-      password: "finStrat$",
-      displayName: "Michael Rodriguez",
-      role: "Partner",
-      dept: "Fintech",
-      email: "m.rodriguez@orbitcapital.com",
-    },
-    ppatel: {
-      password: "healthTech@1",
-      displayName: "Dr. Priya Patel",
-      role: "Partner",
-      dept: "Healthcare",
-      email: "p.patel@orbitcapital.com",
-    },
-    akim: {
-      password: "aiVentures",
-      displayName: "Alex Kim",
-      role: "Principal",
-      dept: "AI",
-      email: "a.kim@orbitcapital.com",
-    },
-    lthompson: {
-      password: "enterprise$",
-      displayName: "Lisa Thompson",
-      role: "Vice President",
-      dept: "Enterprise Software",
-      email: "l.thompson@orbitcapital.com",
-    },
-    dwang: {
-      password: "secCloud*",
-      displayName: "David Wang",
-      role: "Associate",
-      dept: "Cybersecurity",
-      email: "d.wang@orbitcapital.com",
-    },
-    rjohnson: {
-      password: "finBlock#7",
-      displayName: "Rachel Johnson",
-      role: "Senior Associate",
-      dept: "Fintech",
-      email: "r.johnson@orbitcapital.com",
-    },
-    itadmin: {
-      password: "Admin!234",
-      displayName: "Intranet Administrator",
-      role: "IT Admin",
-      dept: "IT",
-      email: "admin@orbitcapital.com",
-    },
-    hrmanager: {
-      password: "HRmanage99",
-      displayName: "HR Manager",
-      role: "HR Manager",
-      dept: "Human Resources",
-      email: "hr@orbitcapital.com",
-    },
-    brodielam: {
-      password: "1234",
-      displayName: "Brodie L.",
-      role: "Intern",
-      dept: "Useless Crap",
-      email: "bugbrodie@gmail.com",
-    },
-    sethlam: {
-      password: "p3n1534t3r",
-      displayName: "Seth Lamprecht",
-      role: "Sucking Corporate Dick",
-      dept: "'Entertainment' Department*",
-      email: "seth@idiot.gov",
-    },
-  };
+  var credentialStore = {}; // populated asynchronously
+  var credentialsLoaded = false;
+  var loadError = null;
+  var readyQueue = [];
+
+  function notifyReady() {
+    credentialsLoaded = true;
+    while (readyQueue.length) {
+      try {
+        readyQueue.shift()();
+      } catch (e) {}
+    }
+  }
+
+  function loadCredentials() {
+    fetch("credentials.json", { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (json) {
+        credentialStore = json || {};
+        notifyReady();
+      })
+      .catch(function (err) {
+        loadError = err;
+        console.error("Failed to load credentials.json:", err);
+        notifyReady();
+      });
+  }
+
+  loadCredentials();
 
   var sessionKey = "orbit_session";
 
@@ -117,6 +62,14 @@
   }
 
   function login(username, password, remember) {
+    if (!credentialsLoaded) {
+      return {
+        success: false,
+        message: loadError
+          ? "Credential load error."
+          : "Loading credentials, try again.",
+      };
+    }
     if (!username) {
       return { success: false, message: "Enter User ID." };
     }
@@ -168,5 +121,14 @@
     getCurrentUser: getCurrentUser,
     requireAuth: requireAuth,
     _credentials: credentialStore,
+    whenReady: function (cb) {
+      if (credentialsLoaded) cb();
+      else readyQueue.push(cb);
+    },
+    reload: function () {
+      credentialsLoaded = false;
+      loadError = null;
+      loadCredentials();
+    },
   };
 })(window);

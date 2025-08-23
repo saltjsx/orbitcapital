@@ -22,32 +22,9 @@ var Portal = (function () {
     },
   ];
 
-  var documents = [
-    {
-      name: "Q2_2025_Portfolio_Update.pdf",
-      dept: "Investments",
-      size: "1.2 MB",
-      modified: "2025-08-08",
-    },
-    {
-      name: "HR_Policy_Handbook_v3.doc",
-      dept: "HR",
-      size: "824 KB",
-      modified: "2025-07-30",
-    },
-    {
-      name: "Cyber_Threat_Report_July.xls",
-      dept: "Cybersecurity",
-      size: "642 KB",
-      modified: "2025-07-29",
-    },
-    {
-      name: "AI_Sector_Analysis.ppt",
-      dept: "AI",
-      size: "2.4 MB",
-      modified: "2025-07-20",
-    },
-  ];
+  var documents = []; // loaded from documents.json
+  var documentsLoaded = false;
+  var docLoadError = null;
 
   var directory = Object.keys(OrbitAuth._credentials).map(function (username) {
     var u = OrbitAuth._credentials[username];
@@ -119,14 +96,38 @@ var Portal = (function () {
 
   function init() {
     if (!OrbitAuth.requireAuth()) return;
-    buildWelcome();
-    renderAnnouncements();
-    renderDocuments();
-    renderDirectory();
-    renderMetrics();
-    renderSystems();
-    renderHR();
-    buildTicker();
+    // Wait for credentials before rendering directory
+    OrbitAuth.whenReady(function () {
+      buildWelcome();
+      renderAnnouncements();
+      fetchDocuments(function () {
+        renderDocuments();
+      });
+      renderDirectory();
+      renderMetrics();
+      renderSystems();
+      renderHR();
+      buildTicker();
+    });
+  }
+
+  function fetchDocuments(cb) {
+    fetch("documents.json", { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (json) {
+        documents = Array.isArray(json) ? json : [];
+        documentsLoaded = true;
+        cb && cb();
+      })
+      .catch(function (err) {
+        docLoadError = err;
+        documentsLoaded = true;
+        cb && cb();
+        console.error("Failed to load documents.json:", err);
+      });
   }
 
   function buildWelcome() {
@@ -177,17 +178,30 @@ var Portal = (function () {
 
   function renderDocuments() {
     var el = document.getElementById("docBody");
+    if (!documentsLoaded) {
+      el.innerHTML = "<em>Loading documents...</em>";
+      return;
+    }
+    if (docLoadError) {
+      el.innerHTML = '<em style="color:#a00">Error loading documents.json</em>';
+      return;
+    }
     if (!documents.length) {
       el.innerHTML = "<em>No documents available.</em>";
       return;
     }
     var rows = documents
       .map(function (d, idx) {
+        var link = d.url
+          ? '<a href="' +
+            escapeHtml(d.url) +
+            '" target="_blank" style="color:#0b3c7a;text-decoration:underline">' +
+            escapeHtml(d.name) +
+            "</a>"
+          : '<span style="color:#0b3c7a">' + escapeHtml(d.name) + "</span>";
         return (
-          '<tr data-doc-index="' +
-          idx +
-          '"><td class="doc-link" style="color:#0b3c7a;cursor:pointer;text-decoration:underline">' +
-          escapeHtml(d.name) +
+          "<tr><td>" +
+          link +
           "</td><td>" +
           escapeHtml(d.dept) +
           "</td><td>" +
@@ -202,28 +216,21 @@ var Portal = (function () {
       '<table class="data-table"><thead><tr><th>File Name</th><th>Dept</th><th>Size</th><th>Modified</th></tr></thead><tbody>' +
       rows +
       "</tbody></table>" +
-      '<div style="font:10px Verdana;margin-top:6px;color:#5b6d78">Click a filename to simulate opening.</div>';
+      '<div style="font:10px Verdana;margin-top:6px;color:#5b6d78">Click a filename to simulate opening. | <a href="documents.json" target="_blank">Open documents.json</a></div>';
 
-    // Attach click handlers (simulate open)
-    el.querySelectorAll("tr[data-doc-index]").forEach(function (tr) {
-      tr.addEventListener("click", function () {
-        var idx = this.getAttribute("data-doc-index");
-        var d = documents[idx];
-        alert(
-          "Opening document: " +
-            d.name +
-            "\nDepartment: " +
-            d.dept +
-            "\nSize: " +
-            d.size
-        );
-      });
-    });
+    // Rows now use direct anchor links; if no URL provided, no action.
   }
 
   function loadDocuments(btn) {
-    renderDocuments();
-    flashBox(btn);
+    if (!documentsLoaded) {
+      fetchDocuments(function () {
+        renderDocuments();
+        flashBox(btn);
+      });
+    } else {
+      renderDocuments();
+      flashBox(btn);
+    }
   }
 
   function renderDirectory() {
