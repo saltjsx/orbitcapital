@@ -408,15 +408,6 @@ var Portal = (function () {
     }, 450);
   }
 
-  function showCredentials() {
-    var creds = OrbitAuth._credentials;
-    var rows = Object.keys(creds).map(function (k) {
-      var c = creds[k];
-      return k + " / " + c.password + " / " + c.role;
-    });
-    alert("Credentials (user / pass / role):\n\n" + rows.join("\n"));
-  }
-
   function reAuth() {
     if (!OrbitAuth.getCurrentUser()) alert("Session missing.");
     else alert("Session OK for " + OrbitAuth.getCurrentUser().displayName);
@@ -450,7 +441,6 @@ var Portal = (function () {
     minimize: minimize,
     showView: showView,
     refreshTicker: refreshTicker,
-    showCredentials: showCredentials,
     reAuth: reAuth,
     logout: logout,
   };
