@@ -58,7 +58,7 @@ body.portal {background:#e2e5e9;}
 .mod-tools button:hover {background:#fff;}
 .mod-body {padding:10px 12px;font:11px Verdana;line-height:1.5;overflow-x:auto;}
 .mod-body .data-table {min-width:640px;}
-.ticker {background:#fff;border:1px solid #b8c5ce;margin-bottom:18px;padding:6px 10px;font:11px Verdana;display:flex;gap:35px;overflow:hidden;white-space:nowrap;}
+.ticker {background:#fff;border:1px solid #b8c5ce;margin-bottom:18px;padding:6px 10px;font:11px Verdana;display:flex;gap:35px;overflow:hidden;white-space:nowrap;color:#000;}
 .ticker span {animation:ticker 40s linear infinite;display:inline-block;}
 @keyframes ticker {0%{transform:translateX(0);}100%{transform:translateX(-50%);} }
 
