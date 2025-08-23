@@ -26,16 +26,7 @@ var Portal = (function () {
   var documentsLoaded = false;
   var docLoadError = null;
 
-  var directory = Object.keys(OrbitAuth._credentials).map(function (username) {
-    var u = OrbitAuth._credentials[username];
-    return {
-      username: username,
-      name: u.displayName,
-      role: u.role,
-      dept: u.dept,
-      email: u.email,
-    };
-  });
+  // Directory now built on demand after credentials load
 
   var metrics = [
     { kpi: "AUM", value: "$12B", change: "▲ 3%" },
@@ -235,9 +226,24 @@ var Portal = (function () {
 
   function renderDirectory() {
     var el = document.getElementById("dirBody");
+    var creds = OrbitAuth._credentials || {};
+    var users = Object.keys(creds).map(function (username) {
+      var u = creds[username];
+      return {
+        username: username,
+        name: u.displayName,
+        role: u.role,
+        dept: u.dept,
+        email: u.email,
+      };
+    });
+    if (!users.length) {
+      el.innerHTML = "<em>Directory unavailable (loading credentials)...</em>";
+      return;
+    }
     el.innerHTML =
       '<div class="directory">' +
-      directory
+      users
         .map(function (u) {
           return (
             '<div class="dir-card"><h5>' +

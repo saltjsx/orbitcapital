@@ -22,7 +22,14 @@
         return r.json();
       })
       .then(function (json) {
-        credentialStore = json || {};
+        var data = json || {};
+        // Preserve reference so consumers holding _credentials see updates
+        Object.keys(credentialStore).forEach(function (k) {
+          delete credentialStore[k];
+        });
+        Object.keys(data).forEach(function (k) {
+          credentialStore[k] = data[k];
+        });
         notifyReady();
       })
       .catch(function (err) {
