@@ -2,29 +2,29 @@
   {
     "name": "Q2_2025_Portfolio_Update.pdf",
     "dept": "Investments",
-    "size": "1.2 MB",
+    "size": "197 KB",
     "modified": "2025-08-08",
     "url": "./docs/Q2_2025_Portfolio_Update.pdf"
   },
   {
-    "name": "HR_Policy_Handbook_v3.doc",
+    "name": "HR_Policy_Handbook_v3.pdf",
     "dept": "HR",
-    "size": "824 KB",
+    "size": "214 KB",
     "modified": "2025-07-30",
-    "url": ""
+    "url": "./docs/HR_Policy_Handbook_v3.pdf"
   },
   {
-    "name": "Cyber_Threat_Report_July.xls",
+    "name": "Cyber_Threat_Report_July.pdf",
     "dept": "Cybersecurity",
-    "size": "642 KB",
+    "size": "294 KB",
     "modified": "2025-07-29",
-    "url": ""
+    "url": "./docs/Cyber_Threat_Report_July.pdf"
   },
   {
-    "name": "AI_Sector_Analysis.ppt",
+    "name": "AI_Sector_Analysis.pdf",
     "dept": "AI",
-    "size": "2.4 MB",
+    "size": "288 KB",
     "modified": "2025-07-20",
-    "url": ""
+    "url": "./docs/AI_Sector_Analysis.pdf"
   }
 ]
