@@ -1,0 +1,365 @@
+/* About Page Specific Styles */
+
+/* Company Overview Section */
+.company-overview {
+    padding: 80px 30px;
+    background-color: #ffffff;
+}
+
+.overview-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.overview-text h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #BB1717;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.overview-text p {
+    color: #666666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.overview-image {
+    text-align: center;
+}
+
+.about-logo {
+    max-width: 180px;
+    height: auto;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 15px rgba(187, 23, 23, 0.2));
+}
+
+/* Values Section */
+.values {
+    padding: 80px 30px;
+    background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+}
+
+.values-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.value-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.value-icon {
+    color: #BB1717;
+    margin-bottom: 20px;
+}
+
+.value-card:hover {
+    border-color: #BB1717;
+    box-shadow: 0 8px 25px rgba(187, 23, 23, 0.15);
+    transform: translateY(-3px);
+}
+
+.value-card h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #BB1717;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.value-card p {
+    color: #666666;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* Investment Philosophy Section */
+.philosophy {
+    padding: 80px 30px;
+    background-color: #ffffff;
+}
+
+.philosophy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.philosophy-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.philosophy-intro p {
+    font-size: 1.1rem;
+    color: #666666;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.philosophy-item {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.philosophy-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.philosophy-icon {
+    color: #BB1717;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.philosophy-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #BB1717;
+    background-color: rgba(187, 23, 23, 0.1);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.philosophy-item h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.philosophy-item p {
+    color: #666666;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Track Record Section */
+.track-record {
+    padding: 80px 30px;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    color: #ffffff;
+}
+
+.track-record-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.track-record .section-title {
+    color: #ffffff;
+}
+
+.track-record .section-title::after {
+    background: linear-gradient(90deg, transparent 0%, #BB1717 50%, transparent 100%);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 30px;
+    background: rgba(187, 23, 23, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(187, 23, 23, 0.3);
+}
+
+.stat-icon {
+    color: #BB1717;
+    margin-bottom: 20px;
+}
+
+.stat-visual {
+    margin-bottom: 20px;
+}
+
+.stat-bar {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #BB1717 0%, #FF4444 100%);
+    border-radius: 3px;
+    animation: fillBar 2s ease-in-out forwards;
+}
+
+.stat-bar[data-percentage="85"]::after {
+    width: 85%;
+}
+
+.stat-bar[data-percentage="67"]::after {
+    width: 67%;
+}
+
+.stat-bar[data-percentage="92"]::after {
+    width: 92%;
+}
+
+@keyframes fillBar {
+    from {
+        width: 0;
+    }
+}
+
+.stat-info .stat-number {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    color: #BB1717;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-info .stat-label {
+    font-size: 13px;
+    color: #cccccc;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Responsive Design for About Page */
+@media (max-width: 1024px) {
+    .overview-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .values-grid,
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-overview,
+    .values,
+    .philosophy,
+    .track-record {
+        padding: 60px 20px;
+    }
+    
+    .overview-text h2 {
+        font-size: 28px;
+    }
+    
+    .lead {
+        font-size: 16px;
+    }
+    
+    .value-card,
+    .philosophy-item {
+        padding: 25px;
+    }
+    
+    .philosophy-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .philosophy-number {
+        align-self: center;
+    }
+    
+    .stat-item {
+        padding: 25px;
+    }
+    
+    .stat-info .stat-number {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-overview,
+    .values,
+    .philosophy,
+    .track-record {
+        padding: 40px 15px;
+    }
+    
+    .overview-text h2 {
+        font-size: 24px;
+    }
+    
+    .value-card h3 {
+        font-size: 20px;
+    }
+    
+    .philosophy-item h3 {
+        font-size: 18px;
+    }
+    
+    .about-logo {
+        max-width: 120px;
+    }
+}

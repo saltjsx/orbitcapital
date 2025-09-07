@@ -1,0 +1,396 @@
+/* Portfolio Page Specific Styles */
+
+/* Portfolio Stats Section */
+.portfolio-stats {
+    padding: 60px 30px;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    color: #ffffff;
+}
+
+.stats-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 30px;
+    background: rgba(187, 23, 23, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(187, 23, 23, 0.3);
+    transition: all 0.3s ease;
+}
+
+.stat-icon {
+    color: #BB1717;
+    margin-bottom: 10px;
+}
+
+.stat-card:hover {
+    background: rgba(187, 23, 23, 0.15);
+    transform: translateY(-3px);
+}
+
+.stat-card .stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #BB1717;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card .stat-label {
+    font-size: 12px;
+    color: #cccccc;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Portfolio Filter Section */
+.portfolio-filter {
+    padding: 60px 30px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.filter-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.filter-content h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 12px 25px;
+    background-color: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: #BB1717;
+    border-color: #BB1717;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(187, 23, 23, 0.3);
+}
+
+.filter-btn:hover svg,
+.filter-btn.active svg {
+    color: #ffffff;
+}
+
+.filter-btn svg {
+    color: #666666;
+    transition: color 0.3s ease;
+}
+
+/* Portfolio Companies Section */
+.portfolio-companies {
+    padding: 60px 30px 80px;
+    background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+}
+
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.company-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    opacity: 1;
+}
+
+.company-card:hover {
+    border-color: #BB1717;
+    box-shadow: 0 8px 25px rgba(187, 23, 23, 0.15);
+    transform: translateY(-3px);
+}
+
+.company-card.hidden {
+    display: none;
+}
+
+.company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 25px 15px;
+}
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #BB1717 0%, #8B0000 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 10px rgba(187, 23, 23, 0.3);
+}
+
+.company-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.company-status.active {
+    background-color: #e8f5e8;
+    color: #2d7d32;
+    border: 1px solid #4caf50;
+}
+
+.company-status.active svg {
+    color: #2d7d32;
+}
+
+.company-status.exited {
+    background-color: #fff3e0;
+    color: #f57c00;
+    border: 1px solid #ff9800;
+}
+
+.company-status.exited svg {
+    color: #f57c00;
+}
+
+.company-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 25px 15px;
+    letter-spacing: 1px;
+}
+
+.company-description {
+    color: #666666;
+    line-height: 1.7;
+    margin: 0 25px 20px;
+    font-size: 14px;
+}
+
+.company-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 25px 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.investment-year {
+    font-size: 12px;
+    color: #999999;
+    font-weight: bold;
+}
+
+.investment-amount {
+    font-size: 13px;
+    color: #BB1717;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.company-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0 25px 25px;
+}
+
+.tag {
+    padding: 4px 10px;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    font-size: 11px;
+    color: #666666;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Filter Animation */
+.company-card {
+    transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.company-card.filter-out {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Responsive Design for Portfolio Page */
+@media (max-width: 1024px) {
+    .stats-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .filter-buttons {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-stats,
+    .portfolio-filter,
+    .portfolio-companies {
+        padding: 40px 20px;
+    }
+    
+    .stats-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .stat-card .stat-number {
+        font-size: 24px;
+    }
+    
+    .companies-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        width: 200px;
+    }
+    
+    .company-header {
+        padding: 20px 20px 10px;
+    }
+    
+    .company-card h3 {
+        margin: 0 20px 10px;
+        font-size: 18px;
+    }
+    
+    .company-description,
+    .company-meta {
+        margin: 0 20px 15px;
+    }
+    
+    .company-tags {
+        padding: 0 20px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-stats,
+    .portfolio-filter,
+    .portfolio-companies {
+        padding: 30px 15px;
+    }
+    
+    .stats-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-content h2 {
+        font-size: 20px;
+    }
+    
+    .filter-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .company-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+        padding: 15px 15px 10px;
+    }
+    
+    .company-logo {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .company-card h3 {
+        margin: 0 15px 10px;
+        font-size: 16px;
+    }
+    
+    .company-description,
+    .company-meta {
+        margin: 0 15px 10px;
+    }
+    
+    .company-tags {
+        padding: 0 15px 15px;
+    }
+    
+    .company-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
