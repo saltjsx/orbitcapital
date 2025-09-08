@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/useAuth";
 import "../styles/intranet.css";
 
 const SSO = () => {
@@ -11,7 +11,7 @@ const SSO = () => {
   });
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
-  const { login, user, loading } = useAuth();
+  const { login, user, authLoading, credentialsLoading } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already logged in
@@ -62,12 +62,12 @@ const SSO = () => {
     setMessageType("");
   };
 
-  if (loading) {
+  if (authLoading || credentialsLoading) {
     return (
       <div className="login-body">
         <div className="login-wrapper">
           <div style={{ textAlign: "center", padding: "50px" }}>
-            Loading credentials...
+            Loading secure sign-in...
           </div>
         </div>
       </div>

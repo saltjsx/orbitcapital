@@ -1,55 +1,98 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 
 // Authentication Context
 const AuthContext = createContext();
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+export default AuthContext; // separate default export for external hook
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [credentials, setCredentials] = useState({});
-  const [loading, setLoading] = useState(true);
+  // authLoading: we're determining if a prior session exists
+  const [authLoading, setAuthLoading] = useState(true);
+  // credentialsLoading: fetching credential file (doesn't block route guard)
+  const [credentialsLoading, setCredentialsLoading] = useState(true);
 
-  // Load credentials from JSON file
+  const SESSION_KEY = "orbit_session";
+  const DEFAULT_TTL = 1000 * 60 * 60 * 12; // 12 hours
+  const REMEMBER_TTL = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+  const clearSessionStores = () => {
+    try {
+      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch {
+      /* noop */
+    }
+  };
+
+  const loadStoredSession = useCallback(() => {
+    const raw =
+      localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw);
+      if (!parsed || !parsed.user) return null;
+      if (parsed.expires && Date.now() > parsed.expires) {
+        clearSessionStores();
+        return null;
+      }
+      return parsed;
+    } catch {
+      clearSessionStores();
+      return null;
+    }
+  }, []);
+
+  // Load credentials from JSON file (non-blocking for auth route decision)
   useEffect(() => {
+    let cancelled = false;
     const loadCredentials = async () => {
       try {
-        const response = await fetch("/intranet/credentials.json");
+        const response = await fetch("/intranet/credentials.json", {
+          cache: "no-store",
+        });
         if (!response.ok) throw new Error("Failed to load credentials");
         const data = await response.json();
-        setCredentials(data);
+        if (!cancelled) setCredentials(data);
       } catch (error) {
         console.error("Failed to load credentials:", error);
       } finally {
-        setLoading(false);
+        if (!cancelled) setCredentialsLoading(false);
       }
     };
-
     loadCredentials();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Check for existing session on mount
+  // Restore prior session first
   useEffect(() => {
-    const session =
-      localStorage.getItem("orbit_session") ||
-      sessionStorage.getItem("orbit_session");
-    if (session) {
-      try {
-        const { user: sessionUser } = JSON.parse(session);
-        setUser(sessionUser);
-      } catch (error) {
-        console.error("Failed to parse session:", error);
-        localStorage.removeItem("orbit_session");
-        sessionStorage.removeItem("orbit_session");
+    const stored = loadStoredSession();
+    if (stored) {
+      setUser(stored.user);
+      // Refresh expiry if within last 25% of TTL (sliding window)
+      if (
+        stored.expires &&
+        stored.expires - Date.now() <
+          (stored.remember ? REMEMBER_TTL : DEFAULT_TTL) * 0.25
+      ) {
+        try {
+          const refreshed = {
+            ...stored,
+            expires:
+              Date.now() + (stored.remember ? REMEMBER_TTL : DEFAULT_TTL),
+          };
+          localStorage.setItem(SESSION_KEY, JSON.stringify(refreshed));
+          if (!stored.remember)
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(refreshed));
+        } catch {
+          /* ignore */
+        }
       }
     }
-  }, []);
+    setAuthLoading(false);
+  }, [loadStoredSession, DEFAULT_TTL, REMEMBER_TTL]);
 
   const login = (username, password, remember = false) => {
     if (!username || !password) {
@@ -78,32 +121,42 @@ export const AuthProvider = ({ children }) => {
 
     setUser(userData);
 
-    // Save session
-    const sessionData = { user: userData, ts: Date.now() };
-    const storage = remember ? localStorage : sessionStorage;
-    storage.setItem("orbit_session", JSON.stringify(sessionData));
+    // Save session (always persist in localStorage for deep-link refresh; mirror in sessionStorage if not remember)
+    const sessionData = {
+      user: userData,
+      ts: Date.now(),
+      remember,
+      expires: Date.now() + (remember ? REMEMBER_TTL : DEFAULT_TTL),
+    };
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+      if (!remember)
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    } catch {
+      console.warn("Failed to persist session");
+    }
 
     return { success: true };
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("orbit_session");
-    sessionStorage.removeItem("orbit_session");
+    clearSessionStores();
   };
 
-  const requireAuth = () => {
-    return !!user;
-  };
+  const requireAuth = () => !!user;
 
   const value = {
     user,
     login,
     logout,
     requireAuth,
-    loading,
+    authLoading,
+    credentialsLoading,
     credentials,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+// (Hook moved to useAuth.js to satisfy fast refresh guidelines)

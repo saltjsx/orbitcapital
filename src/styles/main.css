@@ -31,7 +31,10 @@ body {
 .header {
     background: linear-gradient(135deg, #BB1717 0%, #8B0000 100%);
     border-bottom: 3px solid #660000;
-    position: relative;
+    /* Ensure header and mobile nav sit above page content */
+    position: sticky;
+    top: 0;
+    z-index: 1200;
 }
 
 .header::after {
@@ -486,6 +489,7 @@ body {
         visibility: hidden;
         transition: all 0.3s ease;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1300; /* Above rest of content */
     }
 
     .nav-menu.mobile-open {
