@@ -397,6 +397,10 @@ body {
         font-size: 28px;
     }
     
+    .page-header {
+        margin-top: 141px;
+    }
+    
     .section-title {
         font-size: 24px;
     }
@@ -414,6 +418,7 @@ body {
     
     .page-header {
         padding: 40px 20px;
+        margin-top: 131px;
     }
     
     .footer {
