@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stat.style.opacity = "1";
     });
   }
-  igation();
+  initializeNavigation();
 
   // Initialize animations
   initializeAnimations();

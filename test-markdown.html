@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Markdown</title>
+  </head>
+  <body>
+    <h1>Testing Markdown to HTML</h1>
+    <div id="test-output"></div>
+
+    <script>
+      // Copy the markdownToHtml function from blog.js
+      function markdownToHtml(md) {
+        // Escape HTML first
+        md = md
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        // Code blocks ```
+        md = md.replace(
+          /```([\s\S]*?)```/g,
+          (m, code) =>
+            `<pre><code>${code
+              .replace(/\n$/, "")
+              .replace(/&lt;/g, "<")
+              .replace(/&gt;/g, ">")
+              .replace(/&amp;/g, "&")}</code></pre>`
+        );
+
+        // Inline code
+        md = md.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+        // Headings
+        md = md
+          .replace(/^###### (.*)$/gm, "<h6>$1</h6>")
+          .replace(/^##### (.*)$/gm, "<h5>$1</h5>")
+          .replace(/^#### (.*)$/gm, "<h4>$1</h4>")
+          .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+          .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+          .replace(/^# (.*)$/gm, "<h1>$1</h1>");
+
+        // Bold / Italic
+        md = md
+          .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+          .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+          .replace(/__([^_]+)__/g, "<strong>$1</strong>")
+          .replace(/_([^_]+)_/g, "<em>$1</em>");
+
+        // Links [text](url)
+        md = md.replace(
+          /\[([^\]]+)\]\(([^)]+)\)/g,
+          '<a href="$2" target="_blank" rel="noopener">$1</a>'
+        );
+
+        // Images ![alt](url)
+        md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, url) => {
+          console.log("Processing image:", m, "alt:", alt, "url:", url);
+          if (url.startsWith("images/")) {
+            url = "blog/" + url;
+          }
+          const result = `<img src="${url}" alt="${alt}">`;
+          console.log("Image result:", result);
+          return result;
+        });
+
+        // Unordered lists
+        md = md.replace(/^(?:- |\* )(.*(?:\n(?:- |\* ).+)*)/gm, (listMatch) => {
+          const items = listMatch
+            .split(/\n/)
+            .map((i) => i.replace(/^(?:- |\* )/, ""))
+            .map((i) => `<li>${i}</li>`)
+            .join("");
+          return `<ul>${items}</ul>`;
+        });
+
+        // Ordered lists
+        md = md.replace(/^(?:\d+\. )(.*(?:\n(?:\d+\. ).+)*)/gm, (listMatch) => {
+          const items = listMatch
+            .split(/\n/)
+            .map((i) => i.replace(/^\d+\. /, ""))
+            .map((i) => `<li>${i}</li>`)
+            .join("");
+          return `<ol>${items}</ol>`;
+        });
+
+        // Blockquotes
+        md = md.replace(/^> (.*)$/gm, "<blockquote>$1</blockquote>");
+
+        // Paragraphs (lines that are not HTML tags, headings, list items, blockquotes, code blocks)
+        md = md.replace(
+          /^(?!<h\d|<ul>|<ol>|<li>|<blockquote>|<pre><code>|<img)([^\n]+)\n?/gm,
+          (m, line) => {
+            if (!line.trim()) return "";
+            return `<p>${line.trim()}</p>`;
+          }
+        );
+
+        return md;
+      }
+
+      // Test the function
+      const testMarkdown = `![Jongen & Jongen](https://yd64x3y92p.ufs.sh/f/pXYaC8ycuSsTUlTSioKNNLr2ASc6fBsdYnRoqvm3CjbuKwtV)
+
+This is a test paragraph.`;
+
+      const result = markdownToHtml(testMarkdown);
+      console.log("Input:", testMarkdown);
+      console.log("Output:", result);
+
+      document.getElementById("test-output").innerHTML = result;
+    </script>
+  </body>
+</html>
