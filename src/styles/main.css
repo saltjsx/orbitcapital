@@ -176,6 +176,8 @@ body {
     text-align: center;
     border-bottom: 3px solid #BB1717;
     position: relative;
+    /* Add top margin to account for sticky header height */
+    margin-top: 111px;
 }
 
 .page-header::before {
