@@ -37,38 +37,57 @@ function buildDynamicFilters(companies) {
   const tagContainer = document.getElementById("tagFilters");
   if (!categoryContainer || !tagContainer) return;
 
-  const categories = Array.from(
-    new Set(companies.map((c) => (c.category || "").trim()).filter(Boolean))
-  ).sort();
-  const tags = Array.from(
-    new Set(
-      companies.flatMap((c) =>
-        (c.tags || []).map((t) => t.trim()).filter(Boolean)
-      )
-    )
-  ).sort();
+  // Aggregate categories with counts and optional labels
+  const categoryMap = new Map();
+  companies.forEach((c) => {
+    const rawCat = (c.category || "").trim();
+    if (!rawCat) return;
+    const key = rawCat.toLowerCase();
+    const label = c.categoryLabel || prettifyCategory(rawCat);
+    if (!categoryMap.has(key)) {
+      categoryMap.set(key, { count: 0, label });
+    }
+    categoryMap.get(key).count += 1;
+  });
+  const categories = Array.from(categoryMap.entries()).sort((a, b) =>
+    a[1].label.localeCompare(b[1].label)
+  );
+
+  // Collect unique tags
+  const tagSet = new Map();
+  companies.forEach((c) => {
+    (c.tags || []).forEach((t) => {
+      const tag = t.trim();
+      if (!tag) return;
+      if (!tagSet.has(tag)) tagSet.set(tag, 0);
+      tagSet.set(tag, tagSet.get(tag) + 1);
+    });
+  });
+  const tags = Array.from(tagSet.entries()).sort((a, b) =>
+    a[0].localeCompare(b[0])
+  );
 
   categoryContainer.innerHTML = [
-    `<button class="filter-btn active" data-category="all">ALL</button>`,
+    `<button class="filter-btn active" data-category="all">ALL (${companies.length})</button>`,
     ...categories.map(
-      (cat) =>
+      ([key, info]) =>
         `<button class="filter-btn" data-category="${escapeHtml(
-          cat.toLowerCase()
-        )}">${escapeHtml(prettifyCategory(cat))}</button>`
+          key
+        )}">${escapeHtml(info.label)} (${info.count})</button>`
     ),
   ].join("");
 
   tagContainer.innerHTML = [
     `<button class="filter-btn" data-tag="__clear">CLEAR TAG</button>`,
     ...tags.map(
-      (tag) =>
+      ([tag, count]) =>
         `<button class="filter-btn" data-tag="${escapeHtml(tag)}">${escapeHtml(
           tag
-        )}</button>`
+        )} (${count})</button>`
     ),
   ].join("");
 
-  // Event listeners
+  // Category listeners
   categoryContainer.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       categoryContainer
@@ -80,6 +99,7 @@ function buildDynamicFilters(companies) {
     });
   });
 
+  // Tag listeners
   tagContainer.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tag = btn.getAttribute("data-tag");
@@ -90,7 +110,6 @@ function buildDynamicFilters(companies) {
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
       } else {
-        // toggle behavior
         const isActive = btn.classList.contains("active");
         tagContainer
           .querySelectorAll(".filter-btn")
@@ -120,14 +139,13 @@ function buildDynamicFilters(companies) {
 }
 
 function prettifyCategory(cat) {
-  const map = {
-    ai: "Artificial Intelligence",
-    fintech: "Fintech",
-    enterprise: "Enterprise Software",
-    healthcare: "Healthcare Tech",
-    security: "Cybersecurity",
-  };
-  return map[cat.toLowerCase()] || cat;
+  // Convert snake/kebab/camel to spaced Title Case automatically
+  if (!cat) return "";
+  return cat
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[\-_]+/g, " ")
+    .toLowerCase()
+    .replace(/\b(\w)/g, (m) => m.toUpperCase());
 }
 
 function applyFiltersAndSort() {

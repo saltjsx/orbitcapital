@@ -68,7 +68,20 @@
       <!-- Portfolio Filter -->
       <section class="portfolio-filter">
         <div class="filter-content">
-          <h2>FILTER & SORT</h2>
+          <div class="filter-header-row">
+            <h2>FILTER</h2>
+            <div class="sort-inline">
+              <label for="sortSelect">Sort</label>
+              <select id="sortSelect" aria-label="Sort Portfolio">
+                <option value="year-desc">Newest (Year ↓)</option>
+                <option value="year-asc">Oldest (Year ↑)</option>
+                <option value="name-asc">Name A → Z</option>
+                <option value="name-desc">Name Z → A</option>
+                <option value="status-active">Status (Active First)</option>
+                <option value="status-exited">Status (Exited First)</option>
+              </select>
+            </div>
+          </div>
           <div class="filter-groups">
             <div class="filter-group">
               <h3 class="filter-heading">Sectors</h3>
@@ -85,19 +98,6 @@
                 class="filter-buttons tag-filters"
                 aria-label="Tag Filters"
               ></div>
-            </div>
-            <div class="filter-group sort-group">
-              <h3 class="filter-heading">Sort</h3>
-              <div class="sort-controls">
-                <select id="sortSelect" aria-label="Sort Portfolio">
-                  <option value="year-desc">Newest (Year ↓)</option>
-                  <option value="year-asc">Oldest (Year ↑)</option>
-                  <option value="name-asc">Name A → Z</option>
-                  <option value="name-desc">Name Z → A</option>
-                  <option value="status-active">Status (Active First)</option>
-                  <option value="status-exited">Status (Exited First)</option>
-                </select>
-              </div>
             </div>
           </div>
           <div

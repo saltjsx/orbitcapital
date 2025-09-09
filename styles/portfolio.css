@@ -66,6 +66,51 @@
     letter-spacing: 2px;
 }
 
+/* Compact header row with inline sort */
+.filter-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.filter-header-row h2 { margin: 0; }
+
+.sort-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.sort-inline label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.sort-inline select {
+    padding: 6px 10px;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff;
+    cursor: pointer;
+}
+
+.sort-inline select:focus { outline: none; border-color: #BB1717; }
+
+/* Hide legacy sort group if present */
+.sort-group { display: none; }
+
 .filter-groups {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
