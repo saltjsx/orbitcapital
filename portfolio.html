@@ -68,23 +68,43 @@
       <!-- Portfolio Filter -->
       <section class="portfolio-filter">
         <div class="filter-content">
-          <h2>FILTER BY SECTOR</h2>
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">ALL</button>
-            <button class="filter-btn" data-filter="ai">
-              ARTIFICIAL INTELLIGENCE
-            </button>
-            <button class="filter-btn" data-filter="fintech">FINTECH</button>
-            <button class="filter-btn" data-filter="enterprise">
-              ENTERPRISE SOFTWARE
-            </button>
-            <button class="filter-btn" data-filter="healthcare">
-              HEALTHCARE TECH
-            </button>
-            <button class="filter-btn" data-filter="security">
-              CYBERSECURITY
-            </button>
+          <h2>FILTER & SORT</h2>
+          <div class="filter-groups">
+            <div class="filter-group">
+              <h3 class="filter-heading">Sectors</h3>
+              <div
+                id="categoryFilters"
+                class="filter-buttons"
+                aria-label="Sector Filters"
+              ></div>
+            </div>
+            <div class="filter-group">
+              <h3 class="filter-heading">Tags</h3>
+              <div
+                id="tagFilters"
+                class="filter-buttons tag-filters"
+                aria-label="Tag Filters"
+              ></div>
+            </div>
+            <div class="filter-group sort-group">
+              <h3 class="filter-heading">Sort</h3>
+              <div class="sort-controls">
+                <select id="sortSelect" aria-label="Sort Portfolio">
+                  <option value="year-desc">Newest (Year ↓)</option>
+                  <option value="year-asc">Oldest (Year ↑)</option>
+                  <option value="name-asc">Name A → Z</option>
+                  <option value="name-desc">Name Z → A</option>
+                  <option value="status-active">Status (Active First)</option>
+                  <option value="status-exited">Status (Exited First)</option>
+                </select>
+              </div>
+            </div>
           </div>
+          <div
+            class="active-filters"
+            id="activeFilters"
+            aria-live="polite"
+          ></div>
         </div>
       </section>
 

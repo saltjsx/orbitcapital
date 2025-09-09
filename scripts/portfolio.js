@@ -1,11 +1,15 @@
 // Portfolio Page Specific JavaScript (Simplified)
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Load companies from JSON then init interactions
   loadPortfolioCompanies();
 });
 
 // Fetch and render portfolio companies from JSON
+let ALL_COMPANIES = [];
+let activeCategory = "all";
+let activeTag = null; // single tag filter for simplicity
+let currentSort = "year-desc";
+
 function loadPortfolioCompanies() {
   fetch("portfolio_companies.json", { cache: "no-cache" })
     .then((res) => {
@@ -13,10 +17,10 @@ function loadPortfolioCompanies() {
       return res.json();
     })
     .then((companies) => {
-      renderCompanies(companies);
-      updateStats(companies);
-      initializePortfolioFilter();
-      initializeBasicInteractions();
+      ALL_COMPANIES = companies.slice();
+      updateStats(ALL_COMPANIES);
+      buildDynamicFilters(ALL_COMPANIES);
+      updateDisplay();
     })
     .catch((err) => {
       console.error(err);
@@ -26,6 +30,176 @@ function loadPortfolioCompanies() {
           '<p style="padding:1rem;color:#bb1717;">Unable to load portfolio companies right now.</p>';
       }
     });
+}
+
+function buildDynamicFilters(companies) {
+  const categoryContainer = document.getElementById("categoryFilters");
+  const tagContainer = document.getElementById("tagFilters");
+  if (!categoryContainer || !tagContainer) return;
+
+  const categories = Array.from(
+    new Set(companies.map((c) => (c.category || "").trim()).filter(Boolean))
+  ).sort();
+  const tags = Array.from(
+    new Set(
+      companies.flatMap((c) =>
+        (c.tags || []).map((t) => t.trim()).filter(Boolean)
+      )
+    )
+  ).sort();
+
+  categoryContainer.innerHTML = [
+    `<button class="filter-btn active" data-category="all">ALL</button>`,
+    ...categories.map(
+      (cat) =>
+        `<button class="filter-btn" data-category="${escapeHtml(
+          cat.toLowerCase()
+        )}">${escapeHtml(prettifyCategory(cat))}</button>`
+    ),
+  ].join("");
+
+  tagContainer.innerHTML = [
+    `<button class="filter-btn" data-tag="__clear">CLEAR TAG</button>`,
+    ...tags.map(
+      (tag) =>
+        `<button class="filter-btn" data-tag="${escapeHtml(tag)}">${escapeHtml(
+          tag
+        )}</button>`
+    ),
+  ].join("");
+
+  // Event listeners
+  categoryContainer.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      categoryContainer
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCategory = btn.getAttribute("data-category");
+      updateDisplay();
+    });
+  });
+
+  tagContainer.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tag = btn.getAttribute("data-tag");
+      if (tag === "__clear") {
+        activeTag = null;
+        tagContainer
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      } else {
+        // toggle behavior
+        const isActive = btn.classList.contains("active");
+        tagContainer
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        if (isActive) {
+          activeTag = null;
+          tagContainer
+            .querySelector('[data-tag="__clear"]')
+            ?.classList.add("active");
+        } else {
+          activeTag = tag;
+          btn.classList.add("active");
+        }
+      }
+      updateDisplay();
+    });
+  });
+
+  // Sort select
+  const sortSelect = document.getElementById("sortSelect");
+  if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+      currentSort = sortSelect.value;
+      updateDisplay();
+    });
+  }
+}
+
+function prettifyCategory(cat) {
+  const map = {
+    ai: "Artificial Intelligence",
+    fintech: "Fintech",
+    enterprise: "Enterprise Software",
+    healthcare: "Healthcare Tech",
+    security: "Cybersecurity",
+  };
+  return map[cat.toLowerCase()] || cat;
+}
+
+function applyFiltersAndSort() {
+  let filtered = ALL_COMPANIES.slice();
+  if (activeCategory && activeCategory !== "all") {
+    filtered = filtered.filter(
+      (c) => (c.category || "").toLowerCase() === activeCategory.toLowerCase()
+    );
+  }
+  if (activeTag) {
+    filtered = filtered.filter((c) => (c.tags || []).includes(activeTag));
+  }
+
+  switch (currentSort) {
+    case "year-asc":
+      filtered.sort((a, b) => (a.year || 0) - (b.year || 0));
+      break;
+    case "year-desc":
+      filtered.sort((a, b) => (b.year || 0) - (a.year || 0));
+      break;
+    case "name-asc":
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "name-desc":
+      filtered.sort((a, b) => b.name.localeCompare(a.name));
+      break;
+    case "status-active":
+      filtered.sort((a, b) => {
+        const av = a.status?.toLowerCase() === "active" ? 0 : 1;
+        const bv = b.status?.toLowerCase() === "active" ? 0 : 1;
+        return av - bv || a.name.localeCompare(b.name);
+      });
+      break;
+    case "status-exited":
+      filtered.sort((a, b) => {
+        const av = a.status?.toLowerCase() === "exited" ? 0 : 1;
+        const bv = b.status?.toLowerCase() === "exited" ? 0 : 1;
+        return av - bv || a.name.localeCompare(b.name);
+      });
+      break;
+  }
+  return filtered;
+}
+
+function updateDisplay() {
+  const companies = applyFiltersAndSort();
+  renderCompanies(companies);
+  initializeBasicInteractions();
+  renderActiveFiltersSummary();
+}
+
+function renderActiveFiltersSummary() {
+  const container = document.getElementById("activeFilters");
+  if (!container) return;
+  const parts = [];
+  if (activeCategory && activeCategory !== "all") {
+    parts.push(
+      `<span class="active-filter-chip">Sector: ${escapeHtml(
+        prettifyCategory(activeCategory)
+      )}</span>`
+    );
+  }
+  if (activeTag) {
+    parts.push(
+      `<span class="active-filter-chip">Tag: ${escapeHtml(activeTag)}</span>`
+    );
+  }
+  if (!parts.length) {
+    container.innerHTML = "";
+  } else {
+    container.innerHTML = parts.join("");
+  }
 }
 
 function renderCompanies(companies) {
@@ -94,33 +268,8 @@ function escapeHtml(str) {
 }
 
 // Basic portfolio filtering functionality
-function initializePortfolioFilter() {
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const companyCards = document.querySelectorAll(".company-card");
-
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      // Update active button
-      filterButtons.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
-
-      const filterValue = this.getAttribute("data-filter");
-
-      // Simple filter companies
-      companyCards.forEach((card) => {
-        const category = card.getAttribute("data-category");
-        const shouldShow = filterValue === "all" || category === filterValue;
-
-        if (shouldShow) {
-          card.style.display = "block";
-          card.style.opacity = "1";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    });
-  });
-}
+// initializePortfolioFilter retained for backward compatibility (no-op now)
+function initializePortfolioFilter() {}
 
 // Basic interactions
 function initializeBasicInteractions() {
