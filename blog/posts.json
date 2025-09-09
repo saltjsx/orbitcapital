@@ -3,11 +3,20 @@
     {
       "slug": "jnj-investment",
       "title": "Orbit Capital Announces Strategic $40B Investment from Jongen & Jongen",
-      "date": "2025-09-05",
+      "date": "2025-04-09",
       "author": "Orbit Capital and Jongen & Jongen",
       "excerpt": "We are thrilled to announce that Orbit Capital has secured a landmark strategic investment of $40 billion from Jongen & Jongen, valuing Orbit Capital at $300 billion.",
       "image": "https://yd64x3y92p.ufs.sh/f/pXYaC8ycuSsTUlTSioKNNLr2ASc6fBsdYnRoqvm3CjbuKwtV",
-      "tags": ["Raise", "Investment", "Partnership"]
+      "tags": ["Partnership"]
+    },
+    {
+      "slug": "t7-chat-series-a",
+      "title": "Orbit Capital Leads $50M Series A in T7 Chat",
+      "date": "2025-09-09",
+      "author": "Orbit Capital",
+      "excerpt": "We are excited to announce that Orbit Capital has led a $50 million Series A funding round in T7 Chat, a cutting-edge AI chat platform designed for seamless user experiences.",
+      "image": "https://api.deepai.org/job-view-file/61a12beb-2f62-4ae6-b52c-a18ce5061c76/outputs/output.jpg",
+      "tags": ["Series A", "Investment", "AI" ]
     }
   ]
 }
