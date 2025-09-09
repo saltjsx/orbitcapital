@@ -3,7 +3,17 @@
 (function () {
   document.addEventListener("DOMContentLoaded", initBlog);
 
-  const POSTS_MANIFEST = "blog/posts.json";
+  // Determine context so script works for both /blog.html (root file) and /blog (directory index)
+  const BLOG_PAGE_URL = "/blog"; // canonical blog page path (extensionless)
+  const path = window.location.pathname;
+  const USING_DIRECTORY_INDEX = /\/blog\/?$/.test(path); // e.g. /blog or /blog/
+  const USING_ROOT_FILE = /\/blog\.html$/.test(path); // legacy /blog.html
+
+  // Resolve asset paths relative to current page location
+  const POSTS_MANIFEST = USING_DIRECTORY_INDEX
+    ? "posts.json"
+    : "blog/posts.json";
+  const MARKDOWN_BASE = USING_DIRECTORY_INDEX ? "posts/" : "blog/posts/";
 
   function initBlog() {
     // If blog page
@@ -42,7 +52,7 @@
   }
 
   function isBlogPage() {
-    return /blog\.html$/.test(window.location.pathname);
+    return USING_DIRECTORY_INDEX || USING_ROOT_FILE;
   }
 
   function fetchPosts() {
@@ -75,9 +85,9 @@
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.excerpt || "")}</p>
         ${renderTags(post.tags)}
-        <a class="post-link" href="blog.html?post=${encodeURIComponent(
-          post.slug
-        )}">Read More →</a>
+        <a class="post-link" href="${BLOG_PAGE_URL}?post=${encodeURIComponent(
+        post.slug
+      )}">Read More →</a>
       `;
       grid.appendChild(card);
     });
@@ -102,7 +112,7 @@
     document.getElementById("postMeta").textContent = `${formatDate(
       post.date
     )}${post.author ? " • " + post.author : ""}`;
-    fetch(`blog/posts/${post.slug}.md`)
+    fetch(`${MARKDOWN_BASE}${post.slug}.md`)
       .then((r) => {
         if (!r.ok) throw new Error("Markdown not found");
         return r.text();
@@ -155,9 +165,9 @@
         <div class="news-date">${formatDate(post.date)}</div>
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.excerpt || "")}</p>
-        <a href="blog.html?post=${encodeURIComponent(
-          post.slug
-        )}" class="read-more">Read More →</a>
+        <a href="${BLOG_PAGE_URL}?post=${encodeURIComponent(
+        post.slug
+      )}" class="read-more">Read More →</a>
       `;
       container.appendChild(art);
     });

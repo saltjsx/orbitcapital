@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Orbit Capital</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/blog.css" />
+    <link rel="icon" href="../public/orbit.png" type="image/png" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <img
+              src="../public/orbit white.png"
+              alt="Orbit Capital"
+              class="logo-img"
+            />
+            <span class="company-name">ORBIT CAPITAL</span>
+          </div>
+          <nav class="navigation">
+            <ul class="nav-menu">
+              <li><a href="../index.html">HOME</a></li>
+              <li><a href="../about.html">ABOUT</a></li>
+              <li><a href="../portfolio.html">PORTFOLIO</a></li>
+              <li><a href="../investments.html">INVESTMENTS</a></li>
+              <li><a href="../team.html">TEAM</a></li>
+              <li><a href="../contact.html">CONTACT</a></li>
+              <li><a href="/blog" class="active">BLOG</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="page-header-content">
+          <h1 id="blogPageTitle">ORBIT CAPITAL BLOG</h1>
+          <p id="blogPageSubtitle">
+            Insights & Updates on Technology Investment
+          </p>
+        </div>
+      </section>
+
+      <!-- Blog Content -->
+      <section class="blog-wrapper">
+        <div class="blog-content" id="blogListView">
+          <h2 class="section-title">LATEST POSTS</h2>
+          <div class="posts-grid" id="postsGrid" aria-live="polite"></div>
+        </div>
+        <div class="blog-post hidden" id="singlePostView" aria-live="polite">
+          <article id="postArticle" class="post-article">
+            <div class="post-meta" id="postMeta"></div>
+            <h1 id="postTitle" class="post-title"></h1>
+            <div id="postBody" class="post-body"></div>
+          </article>
+          <div class="post-navigation">
+            <a href="/blog" class="btn btn-secondary">BACK TO ALL POSTS</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <img
+                src="../public/orbit white.png"
+                alt="Orbit Capital"
+                class="footer-logo-img"
+              />
+              <span>ORBIT CAPITAL</span>
+            </div>
+            <p class="footer-description">
+              Premier technology investment firm committed to accelerating
+              innovation through strategic capital and expertise.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>QUICK LINKS</h4>
+            <ul class="footer-links">
+              <li><a href="../about.html">About Us</a></li>
+              <li><a href="../portfolio.html">Portfolio</a></li>
+              <li><a href="../investments.html">Investments</a></li>
+              <li><a href="../team.html">Team</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="../intranet/sso.html">Intranet</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>CONTACT INFO</h4>
+            <div class="contact-info">
+              <p>ADDRESS: 123 Financial District<br />New York, NY 10004</p>
+              <p>PHONE: +1 (555) 123-4567</p>
+              <p>EMAIL: info@orbitcapital.com</p>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>CONNECT</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">LinkedIn</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">Bloomberg</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Orbit Capital. All rights reserved. | Privacy Policy |
+            Terms of Service
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/blog.js"></script>
+  </body>
+</html>
