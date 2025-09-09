@@ -9,12 +9,33 @@ import {
   Target,
   BarChart3,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { getLatestPosts, formatDate, getExcerpt } from "../utils/blogUtils";
 import "../styles/main.css";
 import "../styles/home.css";
 
 const Home = () => {
+  const [latestPosts, setLatestPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadLatestPosts = async () => {
+      try {
+        const posts = await getLatestPosts(3);
+        setLatestPosts(posts);
+      } catch (error) {
+        console.error("Error loading latest posts:", error);
+      } finally {
+        setPostsLoading(false);
+      }
+    };
+
+    loadLatestPosts();
+  }, []);
+
   return (
     <div className="container">
       <Header />
@@ -121,52 +142,55 @@ const Home = () => {
       {/* News Section */}
       <section className="news">
         <div className="news-content">
-          <h2 className="section-title">LATEST NEWS & UPDATES</h2>
-          <div className="news-grid">
-            <article className="news-item">
-              <div className="news-date">
-                <Calendar size={16} style={{ marginRight: "8px" }} />
-                August 15, 2025
-              </div>
-              <h3>Orbit Capital Leads $50M Series B in AI Startup</h3>
-              <p>
-                We are pleased to announce our investment in cutting-edge
-                artificial intelligence technology that will revolutionize
-                enterprise automation.
+          <h2 className="section-title">LATEST INSIGHTS & ANALYSIS</h2>
+          {postsLoading ? (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "40px 0",
+                color: "#666666",
+              }}
+            >
+              <p>Loading latest posts...</p>
+            </div>
+          ) : latestPosts.length > 0 ? (
+            <div className="news-grid">
+              {latestPosts.map((post) => (
+                <article key={post.slug} className="news-item">
+                  <div className="news-date">
+                    <Calendar size={16} style={{ marginRight: "8px" }} />
+                    {formatDate(post.date)}
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>{post.summary || getExcerpt(post.content, 120)}</p>
+                  <Link to={`/blog/${post.slug}`} className="read-more">
+                    Read More <ArrowRight size={16} />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "40px 0",
+                color: "#666666",
+              }}
+            >
+              <p>No blog posts available yet.</p>
+              <p style={{ fontSize: "14px", marginTop: "10px" }}>
+                Check back soon for insights and analysis.
               </p>
-              <a href="#" className="read-more">
-                Read More <ArrowRight size={16} />
-              </a>
-            </article>
-            <article className="news-item">
-              <div className="news-date">
-                <Calendar size={16} style={{ marginRight: "8px" }} />
-                August 8, 2025
-              </div>
-              <h3>Q2 2025 Portfolio Update</h3>
-              <p>
-                Our portfolio companies continue to show exceptional growth with
-                combined revenue increase of 47% year-over-year.
-              </p>
-              <a href="#" className="read-more">
-                Read More <ArrowRight size={16} />
-              </a>
-            </article>
-            <article className="news-item">
-              <div className="news-date">
-                <Calendar size={16} style={{ marginRight: "8px" }} />
-                July 28, 2025
-              </div>
-              <h3>New Partner Joins Orbit Capital Team</h3>
-              <p>
-                We welcome Sarah Chen, former VP at Goldman Sachs, to lead our
-                enterprise software investment division.
-              </p>
-              <a href="#" className="read-more">
-                Read More <ArrowRight size={16} />
-              </a>
-            </article>
-          </div>
+            </div>
+          )}
+
+          {latestPosts.length > 0 && (
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
+              <Link to="/blog" className="btn btn-secondary">
+                View All Posts <ArrowRight size={16} />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

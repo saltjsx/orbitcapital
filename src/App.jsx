@@ -8,6 +8,8 @@ import Team from "./components/Team";
 import SSO from "./components/SSO";
 import Intranet from "./components/Intranet";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Blog from "./components/Blog";
+import Post from "./components/Post";
 import "./App.css";
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<Post />} />
     </Routes>
   );
 }
