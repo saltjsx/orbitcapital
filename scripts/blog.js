@@ -3,17 +3,14 @@
 (function () {
   document.addEventListener("DOMContentLoaded", initBlog);
 
-  // Determine context so script works for both /blog.html (root file) and /blog (directory index)
-  const BLOG_PAGE_URL = "/blog"; // canonical blog page path (extensionless)
+  // Canonical blog root & paths (absolute so /blog without trailing slash works)
+  const BLOG_PAGE_URL = "/blog"; // canonical URL for list & single view
   const path = window.location.pathname;
-  const USING_DIRECTORY_INDEX = /\/blog\/?$/.test(path); // e.g. /blog or /blog/
+  const USING_DIRECTORY_INDEX = /\/blog\/?$/.test(path); // /blog or /blog/
   const USING_ROOT_FILE = /\/blog\.html$/.test(path); // legacy /blog.html
-
-  // Resolve asset paths relative to current page location
-  const POSTS_MANIFEST = USING_DIRECTORY_INDEX
-    ? "posts.json"
-    : "blog/posts.json";
-  const MARKDOWN_BASE = USING_DIRECTORY_INDEX ? "posts/" : "blog/posts/";
+  const BLOG_ROOT = "/blog"; // absolute root for assets
+  const POSTS_MANIFEST = `${BLOG_ROOT}/posts.json`;
+  const MARKDOWN_BASE = `${BLOG_ROOT}/posts/`;
 
   function initBlog() {
     // If blog page
@@ -218,7 +215,7 @@
     md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, url) => {
       // Only prefix with "blog/" for relative image paths
       if (url.startsWith("images/")) {
-        url = "blog/" + url;
+        url = `${BLOG_ROOT}/` + url;
       }
       // For external URLs (http/https) or absolute paths, use as-is
       return `<img src="${url}" alt="${alt}" style="max-width: 100%; height: auto;">`;
