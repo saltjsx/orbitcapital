@@ -9,58 +9,46 @@
   </head>
   <body class="login-body">
     <div class="login-wrapper">
-      <table class="login-panel" cellpadding="0" cellspacing="0">
-        <tr>
-          <td class="lp-left">
-            <div class="product-brand">ORBIT<br /><span>INTRANET</span></div>
-            <p class="tagline">
-              Internal Resource & Collaboration Portal<br /><small
-                >Circa 2003 Edition</small
-              >
-            </p>
-            <ul class="login-bullets">
-              <li>Company Announcements</li>
-              <li>Document Repository</li>
-              <li>HR & IT Resources</li>
-              <li>Team Directory</li>
-              <li>Reports & Metrics</li>
-            </ul>
-          </td>
-          <td class="lp-right">
-            <form id="loginForm" class="login-form" autocomplete="off">
-              <h1>Secure Sign In</h1>
-              <div class="form-row">
-                <label for="username">User ID:</label>
-                <input type="text" id="username" name="username" autofocus />
-              </div>
-              <div class="form-row">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" />
-              </div>
-              <div class="form-row remember-row">
-                <label
-                  ><input type="checkbox" id="remember" /> Remember me</label
-                >
-              </div>
-              <div class="form-actions">
-                <button type="submit" class="btn-oldschool">Sign In</button>
-                <button type="reset" class="btn-oldschool secondary">
-                  Reset
-                </button>
-              </div>
-              <div
-                id="loginMessage"
-                class="login-message"
-                aria-live="polite"
-              ></div>
-              <div class="disclaimer">
-                Unauthorized access prohibited. Credentials are processed on
-                this system.
-              </div>
-            </form>
-          </td>
-        </tr>
-      </table>
+      <div class="login-container">
+        <div class="brand-header">
+          <div class="product-brand">ORBIT</div>
+          <div class="brand-subtitle">INTRANET</div>
+        </div>
+        
+        <form id="loginForm" class="login-form" autocomplete="off">
+          <h1>Secure Sign In</h1>
+          
+          <div class="form-group">
+            <label for="username">USER ID:</label>
+            <input type="text" id="username" name="username" autofocus />
+          </div>
+          
+          <div class="form-group">
+            <label for="password">PASSWORD:</label>
+            <input type="password" id="password" name="password" />
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="remember" />
+              <span class="checkmark"></span>
+              REMEMBER ME
+            </label>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">SIGN IN</button>
+            <button type="reset" class="btn-secondary">RESET</button>
+          </div>
+          
+          <div id="loginMessage" class="login-message" aria-live="polite"></div>
+          
+          <div class="disclaimer">
+            Unauthorized access prohibited. Credentials are processed on this system.
+          </div>
+        </form>
+      </div>
+      
       <div class="login-footer">
         &copy; 2005–2025 Orbit Capital Internal Systems. All Rights Reserved.
       </div>
