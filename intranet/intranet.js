@@ -22,7 +22,10 @@ var Portal = (function () {
     },
   ];
 
-  var documents = []; // loaded from documents.json
+  // Documents explorer state
+  var documents = []; // legacy flat list (kept for backward compat)
+  var docRoot = null; // normalized tree root { type:'folder', name:'', children:[] }
+  var docPath = []; // array of folder names representing current location
   var documentsLoaded = false;
   var docLoadError = null;
 
@@ -85,6 +88,44 @@ var Portal = (function () {
     "London office renovation update posted",
   ];
 
+  // ---------- Spinner utilities ----------
+  function spinnerMarkup() {
+    return (
+      '<div class="spinner-wrap">' +
+      '<div class="spinner-gear"></div>' +
+      '<div class="spinner-text">Loading…</div>' +
+      "</div>"
+    );
+  }
+
+  // Shows a spinner in el, waits ~2s (randomized), and completes after work(cb) signals done.
+  function spinThen(el, work, finalize) {
+    if (!el) return finalize && finalize();
+    el.innerHTML = spinnerMarkup();
+    var minDelay = 1700 + Math.floor(Math.random() * 600);
+    var delayDone = false;
+    var workDone = false;
+    function maybeFinish() {
+      if (delayDone && workDone) {
+        finalize && finalize();
+      }
+    }
+    setTimeout(function () {
+      delayDone = true;
+      maybeFinish();
+    }, minDelay);
+    try {
+      work(function () {
+        workDone = true;
+        maybeFinish();
+      });
+    } catch (e) {
+      // if work throws synchronously, still finish after delay
+      workDone = true;
+      maybeFinish();
+    }
+  }
+
   function init() {
     if (!OrbitAuth.requireAuth()) return;
     // Wait for credentials before rendering directory
@@ -109,7 +150,10 @@ var Portal = (function () {
         return r.json();
       })
       .then(function (json) {
+        // Backward compatible: accept flat array or nested folders
         documents = Array.isArray(json) ? json : [];
+        docRoot = normalizeDocs(json);
+        docPath = [];
         documentsLoaded = true;
         cb && cb();
       })
@@ -119,6 +163,81 @@ var Portal = (function () {
         cb && cb();
         console.error("Failed to load documents.json:", err);
       });
+  }
+
+  // ---------- Documents: normalization & helpers ----------
+  function normalizeDocs(json) {
+    function normalizeItem(item) {
+      if (!item || typeof item !== "object") return null;
+      var isFolder =
+        item.type === "folder" ||
+        Array.isArray(item.children) ||
+        Array.isArray(item.items);
+      if (isFolder) {
+        var kids = (item.children || item.items || [])
+          .map(normalizeItem)
+          .filter(Boolean);
+        return {
+          type: "folder",
+          name: String(item.name || "Folder"),
+          children: kids,
+        };
+      }
+      return {
+        type: "file",
+        name: String(item.name || "Untitled"),
+        dept: item.dept || "",
+        size: item.size || "",
+        modified: item.modified || "",
+        url: item.url || "",
+      };
+    }
+    if (Array.isArray(json)) {
+      return {
+        type: "folder",
+        name: "",
+        children: json.map(normalizeItem).filter(Boolean),
+      };
+    }
+    if (json && typeof json === "object") {
+      if (
+        json.type === "folder" ||
+        Array.isArray(json.children) ||
+        Array.isArray(json.items)
+      ) {
+        return normalizeItem(json);
+      }
+      // single file object
+      var f = normalizeItem(json);
+      return { type: "folder", name: "", children: f ? [f] : [] };
+    }
+    return { type: "folder", name: "", children: [] };
+  }
+
+  function getNodeAtPath(root, pathArr) {
+    var node = root;
+    for (var i = 0; i < pathArr.length; i++) {
+      if (!node || !node.children) break;
+      var seg = pathArr[i];
+      var next = null;
+      for (var j = 0; j < node.children.length; j++) {
+        var ch = node.children[j];
+        if (ch.type === "folder" && ch.name === seg) {
+          next = ch;
+          break;
+        }
+      }
+      if (!next) break;
+      node = next;
+    }
+    return node || root;
+  }
+
+  function toPathString(arr) {
+    return arr.join("/");
+  }
+  function fromPathString(s) {
+    return s ? s.split("/") : [];
   }
 
   function buildWelcome() {
@@ -142,7 +261,16 @@ var Portal = (function () {
   }
 
   function refreshTicker() {
-    buildTicker();
+    var bar = document.querySelector(".ticker");
+    spinThen(
+      bar,
+      function (cb) {
+        cb();
+      },
+      function () {
+        buildTicker();
+      }
+    );
   }
 
   function renderAnnouncements() {
@@ -163,12 +291,28 @@ var Portal = (function () {
   }
 
   function refreshAnnouncements(btn) {
-    renderAnnouncements();
-    flashBox(btn);
+    var el = document.getElementById("annBody");
+    spinThen(
+      el,
+      function (cb) {
+        cb();
+      },
+      function () {
+        renderAnnouncements();
+        flashBox(btn);
+      }
+    );
+  }
+
+  // Choose the right container (module body or standalone view)
+  function getDocContainer() {
+    var view = document.getElementById("view-documents");
+    if (view && !view.classList.contains("hidden")) return view;
+    return document.getElementById("docBody");
   }
 
   function renderDocuments() {
-    var el = document.getElementById("docBody");
+    var el = getDocContainer();
     if (!documentsLoaded) {
       el.innerHTML = "<em>Loading documents...</em>";
       return;
@@ -177,51 +321,154 @@ var Portal = (function () {
       el.innerHTML = '<em style="color:#a00">Error loading documents.json</em>';
       return;
     }
-    if (!documents.length) {
+    if (!docRoot) {
       el.innerHTML = "<em>No documents available.</em>";
       return;
     }
-    var rows = documents
-      .map(function (d, idx) {
-        var link = d.url
-          ? '<a href="' +
-            escapeHtml(d.url) +
-            '" target="_blank" style="color:#0b3c7a;text-decoration:underline">' +
-            escapeHtml(d.name) +
-            "</a>"
-          : '<span style="color:#0b3c7a">' + escapeHtml(d.name) + "</span>";
-        return (
-          "<tr><td>" +
-          link +
-          "</td><td>" +
-          escapeHtml(d.dept) +
-          "</td><td>" +
-          d.size +
-          "</td><td>" +
-          d.modified +
-          "</td></tr>"
-        );
+
+    var node = getNodeAtPath(docRoot, docPath);
+    var children = (node.children || []).slice();
+    // Sort folders first, then files, alpha by name
+    children.sort(function (a, b) {
+      if (a.type !== b.type) return a.type === "folder" ? -1 : 1;
+      return String(a.name)
+        .toLowerCase()
+        .localeCompare(String(b.name).toLowerCase());
+    });
+
+    // Breadcrumb
+    var crumb =
+      '<div class="explorer-bar">' +
+      '<div class="explorer-breadcrumb">' +
+      '<a href="#" onclick="Portal.navDoc(' +
+      "''" +
+      ');return false;">Documents</a>';
+    var acc = [];
+    for (var i = 0; i < docPath.length; i++) {
+      acc.push(docPath[i]);
+      crumb +=
+        '<span class="sep">›</span><a href="#" onclick="Portal.navDoc(\'' +
+        encodeURIComponent(toPathString(acc)) +
+        "');return false;\">" +
+        escapeHtml(docPath[i]) +
+        "</a>";
+    }
+    crumb +=
+      "</div>" +
+      '<div class="explorer-actions">' +
+      (docPath.length
+        ? '<button class="btn-lite" onclick="Portal.navDocUp();return false;">Up</button>'
+        : "") +
+      '<a class="btn-lite" style="margin-left:8px" href="documents.json" target="_blank">Open JSON</a>' +
+      "</div></div>";
+
+    // Rows
+    var rows = children
+      .map(function (item) {
+        if (item.type === "folder") {
+          var encoded = encodeURIComponent(
+            toPathString(docPath.concat([item.name]))
+          );
+          return (
+            '<tr class="is-folder">' +
+            '<td><a href="#" onclick="Portal.navDoc(\'' +
+            encoded +
+            '\');return false;"><span class="ico folder"></span>' +
+            escapeHtml(item.name) +
+            "</a></td>" +
+            "<td></td><td>&lt;DIR&gt;</td><td></td></tr>"
+          );
+        } else {
+          var nameCell = item.url
+            ? '<a href="' +
+              escapeHtml(item.url) +
+              '" target="_blank"><span class="ico file"></span>' +
+              escapeHtml(item.name) +
+              "</a>"
+            : '<span><span class="ico file"></span>' +
+              escapeHtml(item.name) +
+              "</span>";
+          return (
+            "<tr>" +
+            "<td>" +
+            nameCell +
+            "</td>" +
+            "<td>" +
+            escapeHtml(item.dept || "") +
+            "</td>" +
+            "<td>" +
+            (item.size || "") +
+            "</td>" +
+            "<td>" +
+            (item.modified || "") +
+            "</td>" +
+            "</tr>"
+          );
+        }
       })
       .join("");
-    el.innerHTML =
-      '<table class="data-table"><thead><tr><th>File Name</th><th>Dept</th><th>Size</th><th>Modified</th></tr></thead><tbody>' +
-      rows +
-      "</tbody></table>" +
-      '<div style="font:10px Verdana;margin-top:6px;color:#5b6d78">Click a filename to simulate opening. | <a href="documents.json" target="_blank">Open documents.json</a></div>';
 
-    // Rows now use direct anchor links; if no URL provided, no action.
+    el.innerHTML =
+      crumb +
+      '<table class="data-table explorer-table"><thead><tr><th>Name</th><th>Dept</th><th>Size</th><th>Modified</th></tr></thead><tbody>' +
+      rows +
+      "</tbody></table>";
   }
 
   function loadDocuments(btn) {
-    if (!documentsLoaded) {
-      fetchDocuments(function () {
+    var el = getDocContainer();
+    spinThen(
+      el,
+      function (cb) {
+        if (!documentsLoaded)
+          fetchDocuments(function () {
+            cb();
+          });
+        else cb();
+      },
+      function () {
         renderDocuments();
         flashBox(btn);
-      });
-    } else {
-      renderDocuments();
-      flashBox(btn);
-    }
+      }
+    );
+  }
+
+  function navDoc(pathStr) {
+    var el = getDocContainer();
+    spinThen(
+      el,
+      function (cb) {
+        var p = fromPathString(decodeURIComponent(pathStr || ""));
+        var tmp = [];
+        for (var i = 0; i < p.length; i++) {
+          tmp.push(p[i]);
+          var n = getNodeAtPath(docRoot, tmp);
+          if (!n || n.type !== "folder") {
+            tmp.pop();
+            break;
+          }
+        }
+        docPath = tmp;
+        cb();
+      },
+      function () {
+        renderDocuments();
+      }
+    );
+  }
+
+  function navDocUp() {
+    var el = getDocContainer();
+    spinThen(
+      el,
+      function (cb) {
+        if (docPath.length) docPath.pop();
+        cb();
+      },
+      function () {
+        renderDocuments();
+      }
+    );
   }
 
   function renderDirectory() {
@@ -262,8 +509,17 @@ var Portal = (function () {
   }
 
   function loadDirectory(btn) {
-    renderDirectory();
-    flashBox(btn);
+    var el = document.getElementById("dirBody");
+    spinThen(
+      el,
+      function (cb) {
+        cb();
+      },
+      function () {
+        renderDirectory();
+        flashBox(btn);
+      }
+    );
   }
 
   function renderMetrics() {
@@ -288,8 +544,17 @@ var Portal = (function () {
   }
 
   function loadReports(btn) {
-    renderMetrics();
-    flashBox(btn);
+    var el = document.getElementById("repBody");
+    spinThen(
+      el,
+      function (cb) {
+        cb();
+      },
+      function () {
+        renderMetrics();
+        flashBox(btn);
+      }
+    );
   }
 
   function renderSystems() {
@@ -316,8 +581,17 @@ var Portal = (function () {
   }
 
   function loadSystems(btn) {
-    renderSystems();
-    flashBox(btn);
+    var el = document.getElementById("sysBody");
+    spinThen(
+      el,
+      function (cb) {
+        cb();
+      },
+      function () {
+        renderSystems();
+        flashBox(btn);
+      }
+    );
   }
 
   function renderHR() {
@@ -339,8 +613,17 @@ var Portal = (function () {
   }
 
   function loadHR(btn) {
-    renderHR();
-    flashBox(btn);
+    var el = document.getElementById("hrBody");
+    spinThen(
+      el,
+      function (cb) {
+        cb();
+      },
+      function () {
+        renderHR();
+        flashBox(btn);
+      }
+    );
   }
 
   function showView(view) {
@@ -351,10 +634,27 @@ var Portal = (function () {
     var target = document.getElementById("view-" + view);
     if (target) {
       target.classList.remove("hidden");
-      target.innerHTML = buildStandalone(view);
+      spinThen(
+        target,
+        function (cb) {
+          if (view === "documents" && !documentsLoaded)
+            fetchDocuments(function () {
+              cb();
+            });
+          else cb();
+        },
+        function () {
+          if (view === "documents") renderDocuments();
+          else target.innerHTML = buildStandalone(view);
+        }
+      );
     }
-    // highlight nav link
-    var links = document.querySelectorAll(".portal-nav a");
+    // hide dashboard grid when viewing a section
+    var grid = document.getElementById("dashboard-grid");
+    if (grid) grid.classList.add("hidden");
+
+    // highlight nav link (support old sidebar and new top subnav)
+    var links = document.querySelectorAll(".portal-nav a, .subnav-links a");
     links.forEach(function (l) {
       l.classList.remove("active");
     });
@@ -433,6 +733,8 @@ var Portal = (function () {
     init: init,
     refreshAnnouncements: refreshAnnouncements,
     loadDocuments: loadDocuments,
+    navDoc: navDoc,
+    navDocUp: navDocUp,
     loadDirectory: loadDirectory,
     loadReports: loadReports,
     loadSystems: loadSystems,

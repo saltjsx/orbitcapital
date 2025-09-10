@@ -2,195 +2,162 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Orbit Intranet Portal - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbit Intranet</title>
     <link rel="stylesheet" href="intranet.css" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   </head>
-  <body class="portal" onload="Portal.init()">
+  <body class="portal">
     <div class="portal-shell">
       <div class="portal-topbar">
-        <div class="topbar-logo">Orbit Intranet</div>
-        <div class="ticker" id="marqueeTicker">
-          <span id="tickerSpan">Loading internal updates...</span>
+        <div class="topbar-logo">
+          <img
+            src="../public/orbit.png"
+            alt="Orbit Capital"
+            style="height: 22px; vertical-align: middle; margin-right: 6px"
+          />
+          ORBIT Intranet
+          <span class="topbar-env">INTERNAL</span>
         </div>
-        <div class="topbar-user" id="userInfoBar">
-          <span id="userWelcome">Welcome</span>
-          <a href="#" onclick="Portal.logout();return false;">Sign Out</a>
+        <div id="userWelcome" class="topbar-user">Signed in</div>
+        <div class="topbar-user">
+          <a href="#" onclick="Portal.reAuth();return false;">Re-auth check</a>
+          <a href="#" onclick="Portal.logout();return false;">Sign out</a>
         </div>
       </div>
+
+      <div class="ticker"><span id="tickerSpan"></span></div>
+
       <div class="portal-main">
-        <div class="portal-nav" id="leftNav">
-          <div class="nav-section">
-            <h4>Navigation</h4>
-            <ul>
-              <li><a href="home.html" class="active">Home Dashboard</a></li>
-              <li>
-                <a
-                  href="#"
-                  onclick="Portal.showView('announcements');return false;"
-                  >Announcements</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.showView('documents');return false;"
-                  >Documents</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.showView('directory');return false;"
-                  >Team Directory</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.showView('reports');return false;"
-                  >Reports</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.showView('systems');return false;"
-                  >System Status</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.showView('hr');return false;"
-                  >HR Resources</a
-                >
-              </li>
-            </ul>
+        <div class="portal-content">
+          <div class="portal-subnav">
+            <nav class="subnav-links">
+              <a href="home.html" class="active">Dashboard</a>
+              <a
+                href="#"
+                onclick="Portal.showView('announcements');return false;"
+                >Announcements</a
+              >
+              <a href="#" onclick="Portal.showView('documents');return false;"
+                >Documents</a
+              >
+              <a href="#" onclick="Portal.showView('directory');return false;"
+                >Directory</a
+              >
+              <a href="#" onclick="Portal.showView('reports');return false;"
+                >Reports</a
+              >
+              <a href="#" onclick="Portal.showView('systems');return false;"
+                >Systems</a
+              >
+              <a href="#" onclick="Portal.showView('hr');return false;">HR</a>
+            </nav>
+            <div class="subnav-actions">
+              <a href="#" onclick="Portal.refreshTicker();return false;"
+                >Refresh Ticker</a
+              >
+              <span class="sep">|</span>
+              <a href="#" onclick="Portal.toggleAllModules();return false;"
+                >Toggle All Modules</a
+              >
+            </div>
           </div>
-          <div class="nav-section">
-            <h4>Shortcuts</h4>
-            <ul>
-              <li>
-                <a href="#" onclick="Portal.toggleAllModules();return false;"
-                  >Collapse All</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.refreshTicker();return false;"
-                  >Refresh Ticker</a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Portal.reAuth();return false;"
-                  >Re-Auth Check</a
-                >
-              </li>
-            </ul>
+          <!-- Dashboard Modules -->
+          <div class="module-grid" id="dashboard-grid">
+            <div class="mod-box">
+              <div class="mod-head">
+                Announcements
+                <div class="mod-tools">
+                  <button onclick="Portal.refreshAnnouncements(this)">
+                    Refresh
+                  </button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="annBody"></div>
+            </div>
+
+            <div class="mod-box">
+              <div class="mod-head">
+                Documents
+                <div class="mod-tools">
+                  <button onclick="Portal.loadDocuments(this)">Load</button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="docBody"></div>
+            </div>
+
+            <div class="mod-box">
+              <div class="mod-head">
+                Directory
+                <div class="mod-tools">
+                  <button onclick="Portal.loadDirectory(this)">Load</button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="dirBody"></div>
+            </div>
+
+            <div class="mod-box">
+              <div class="mod-head">
+                Reports & KPIs
+                <div class="mod-tools">
+                  <button onclick="Portal.loadReports(this)">Load</button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="repBody"></div>
+            </div>
+
+            <div class="mod-box">
+              <div class="mod-head">
+                Systems
+                <div class="mod-tools">
+                  <button onclick="Portal.loadSystems(this)">Load</button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="sysBody"></div>
+            </div>
+
+            <div class="mod-box">
+              <div class="mod-head">
+                HR
+                <div class="mod-tools">
+                  <button onclick="Portal.loadHR(this)">Load</button>
+                  <button onclick="Portal.minimize(this)">Minimize</button>
+                </div>
+              </div>
+              <div class="mod-body" id="hrBody"></div>
+            </div>
           </div>
-          <div class="nav-section">
-            <h4>Admin</h4>
-            <ul>
-              <!-- (Previously 'View Credentials' link removed for security) -->
-            </ul>
-          </div>
-        </div>
-        <div class="portal-content" id="portalContent">
-          <div id="view-announcements" class="view-section"></div>
+
+          <!-- Standalone Views (filled by JS when selected) -->
+          <div id="view-announcements" class="view-section hidden"></div>
           <div id="view-documents" class="view-section hidden"></div>
           <div id="view-directory" class="view-section hidden"></div>
           <div id="view-reports" class="view-section hidden"></div>
           <div id="view-systems" class="view-section hidden"></div>
           <div id="view-hr" class="view-section hidden"></div>
-
-          <div class="module-grid" id="dashboardModules">
-            <!-- Announcements Module -->
-            <div class="mod-box" data-module="announcements">
-              <div class="mod-head">
-                Announcements
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.refreshAnnouncements(this)">
-                    ↻
-                  </button>
-                </div>
-              </div>
-              <div class="mod-body" id="annBody">
-                <strong>Loading announcements...</strong>
-              </div>
-            </div>
-
-            <!-- Documents Module -->
-            <div class="mod-box" data-module="documents">
-              <div class="mod-head">
-                Recent Documents
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.loadDocuments(this)">↻</button>
-                </div>
-              </div>
-              <div class="mod-body" id="docBody">
-                <em>No documents loaded.</em>
-              </div>
-            </div>
-
-            <!-- Directory Module -->
-            <div class="mod-box" data-module="directory">
-              <div class="mod-head">
-                Team Directory
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.loadDirectory(this)">↻</button>
-                </div>
-              </div>
-              <div class="mod-body" id="dirBody">
-                <em>Directory not loaded.</em>
-              </div>
-            </div>
-
-            <!-- Reports Module -->
-            <div class="mod-box" data-module="reports">
-              <div class="mod-head">
-                Key Metrics
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.loadReports(this)">↻</button>
-                </div>
-              </div>
-              <div class="mod-body" id="repBody">
-                <em>Metrics pending.</em>
-              </div>
-            </div>
-
-            <!-- System Status Module -->
-            <div class="mod-box" data-module="systems">
-              <div class="mod-head">
-                System Status
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.loadSystems(this)">↻</button>
-                </div>
-              </div>
-              <div class="mod-body" id="sysBody">
-                <em>Status grid pending.</em>
-              </div>
-            </div>
-
-            <!-- HR Resources Module -->
-            <div class="mod-box" data-module="hr">
-              <div class="mod-head">
-                HR Resources
-                <div class="mod-tools">
-                  <button onclick="Portal.minimize(this)">_</button
-                  ><button onclick="Portal.loadHR(this)">↻</button>
-                </div>
-              </div>
-              <div class="mod-body" id="hrBody">
-                <em>HR links pending.</em>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
       <div class="portal-footer">
-        &copy; 2005–2025 Orbit Capital Internal Portal |
-        <a href="#" onclick="Portal.toggleAllModules();return false;"
-          >Toggle Modules</a
-        >
-        | <a href="#" onclick="Portal.logout();return false;">Sign Out</a>
+        © 2005–2025 Orbit Capital • <a href="sso.html">Switch account</a>
       </div>
     </div>
+
     <script src="auth.js"></script>
     <script src="intranet.js"></script>
+    <script>
+      // Initialize after DOM ready
+      (function () {
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", Portal.init);
+        } else {
+          Portal.init();
+        }
+      })();
+    </script>
   </body>
 </html>

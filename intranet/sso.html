@@ -3,68 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <title>Orbit Intranet - Secure Sign In</title>
-    <link rel="stylesheet" href="intranet.css" />
+    <link rel="stylesheet" href="sso.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   </head>
-  <body class="login-body">
-    <div class="login-wrapper">
-      <table class="login-panel" cellpadding="0" cellspacing="0">
-        <tr>
-          <td class="lp-left">
-            <div class="product-brand">ORBIT<br /><span>INTRANET</span></div>
-            <p class="tagline">
-              Internal Resource & Collaboration Portal<br /><small
-                >Circa 2003 Edition</small
-              >
-            </p>
-            <ul class="login-bullets">
-              <li>Company Announcements</li>
-              <li>Document Repository</li>
-              <li>HR & IT Resources</li>
-              <li>Team Directory</li>
-              <li>Reports & Metrics</li>
-            </ul>
-          </td>
-          <td class="lp-right">
-            <form id="loginForm" class="login-form" autocomplete="off">
-              <h1>Secure Sign In</h1>
-              <div class="form-row">
-                <label for="username">User ID:</label>
-                <input type="text" id="username" name="username" autofocus />
-              </div>
-              <div class="form-row">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" />
-              </div>
-              <div class="form-row remember-row">
-                <label
-                  ><input type="checkbox" id="remember" /> Remember me</label
-                >
-              </div>
-              <div class="form-actions">
-                <button type="submit" class="btn-oldschool">Sign In</button>
-                <button type="reset" class="btn-oldschool secondary">
-                  Reset
-                </button>
-              </div>
-              <div
-                id="loginMessage"
-                class="login-message"
-                aria-live="polite"
-              ></div>
-              <div class="disclaimer">
-                Unauthorized access prohibited. Credentials are processed on
-                this system.
-              </div>
-            </form>
-          </td>
-        </tr>
-      </table>
-      <div class="login-footer">
-        &copy; 2005–2025 Orbit Capital Internal Systems. All Rights Reserved.
+  <body class="sso-body">
+    <div class="sso-container">
+      <div class="sso-card" role="main" aria-labelledby="sso-title">
+        <img class="sso-logo" src="../public/orbit.png" alt="Orbit Capital" />
+        <h1 id="sso-title" class="sso-title">Sign in</h1>
+        <form id="loginForm" class="sso-form" autocomplete="off" novalidate>
+          <label class="sso-label" for="username">Email or user ID</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            inputmode="email"
+            autocomplete="username"
+            placeholder="name@orbitcapital.com"
+            autofocus
+          />
+
+          <label class="sso-label" for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+          />
+
+          <div class="sso-remember">
+            <label
+              ><input type="checkbox" id="remember" /> Keep me signed in</label
+            >
+          </div>
+
+          <div class="sso-actions">
+            <button type="submit" class="sso-btn primary">Sign in</button>
+            <button type="reset" class="sso-btn">Reset</button>
+          </div>
+
+          <div id="loginMessage" class="sso-message" aria-live="polite"></div>
+
+          <div class="sso-links" aria-hidden="true">
+            <a href="#" tabindex="-1">Sign-in options</a>
+            <span class="dot">•</span>
+            <a href="#" tabindex="-1">Terms of use</a>
+            <span class="dot">•</span>
+            <a href="#" tabindex="-1">Privacy & cookies</a>
+          </div>
+        </form>
       </div>
     </div>
+    <div class="sso-footer">
+      © 2005–2025 Orbit Capital. All rights reserved.
+    </div>
+
     <script src="auth.js"></script>
     <script>
       (function () {
@@ -77,17 +72,16 @@
           const remember = document.getElementById("remember").checked;
           const result = window.OrbitAuth.login(u, p, remember);
           if (result.success) {
-            msg.className = "login-message success";
+            msg.className = "sso-message success";
             msg.textContent = "Login successful. Redirecting...";
             setTimeout(() => {
               window.location.href = "home.html";
             }, 600);
           } else {
-            msg.className = "login-message error";
+            msg.className = "sso-message error";
             msg.textContent = result.message;
           }
         });
-        // Auto redirect if already logged in
         if (window.OrbitAuth.getCurrentUser()) {
           window.location.href = "home.html";
         }
