@@ -1,0 +1,16 @@
+
+"template": {
+  "folder": {
+    "type": "folder",
+    "name": "Example Folder",
+    "children": []
+  },
+  "file": {
+    "type": "file",
+    "name": "example.pdf",
+    "dept": "Example Dept",
+    "size": "100 KB",
+    "modified": "2025-09-11",
+    "url": "./docs/example.pdf"
+  }
+}

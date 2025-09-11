@@ -1,36 +1,40 @@
 {
   "type": "folder",
   "name": "Documents",
-  "children": [
+  "children": [{
+    "type":"folder",
+    "name": "Corporate",
+    "children": [{
+      "type": "file",
+      "name": "Investment_Agreement-JongenJongenOrbit Capital.pdf",
+      "dept": "Corporate",
+      "size": "215 KB",
+      "modified": "2025-04-09",
+      "url": "https://americaabdul.github.io/orbitdocs/pdf/Investment_Agreement-JongenJongenOrbit%20Capital.pdf"
+    }]
+  },{
+    "type":"folder",
+    "name": "Investments",
+    "children": [{
+      "type": "file",
+      "name": "t7chat_investment.pdf",
+      "dept": "Investments",
+      "size": "156 KB",
+      "modified": "2025-09-09",
+      "url": "https://americaabdul.github.io/orbitdocs/pdf/t7chat_investment.pdf"
+    }]
+  },
     {
       "type": "folder",
       "name": "Reports",
-      "children": [
-        {
-          "type": "file",
-          "name": "Q2_2025_Portfolio_Update.pdf",
-          "dept": "Investments",
-          "size": "197 KB",
-          "modified": "2025-08-08",
-          "url": "./docs/Q2_2025_Portfolio_Update.pdf"
-        },
-        {
-          "type": "file",
-          "name": "Cyber_Threat_Report_July.pdf",
-          "dept": "Cybersecurity",
-          "size": "294 KB",
-          "modified": "2025-07-29",
-          "url": "./docs/Cyber_Threat_Report_July.pdf"
-        },
-        {
-          "type": "file",
-          "name": "AI_Sector_Analysis.pdf",
-          "dept": "AI",
-          "size": "288 KB",
-          "modified": "2025-07-20",
-          "url": "./docs/AI_Sector_Analysis.pdf"
-        }
-      ]
+      "children": [{
+        "type": "file",
+        "name": "OrbitCapital_Sector Report_Artificial Intelligence.pdf",
+        "dept": "Reports",
+        "size": "164 KB",
+        "modified": "2025-09-10",
+        "url": "https://americaabdul.github.io/orbitdocs/pdf/OrbitCapital_Sector%20Report_Artificial%20Intelligence.pdf"
+      }]
     },
     {
       "type": "folder",
@@ -38,11 +42,11 @@
       "children": [
         {
           "type": "file",
-          "name": "HR_Policy_Handbook_v3.pdf",
+          "name": "HR_Handbook.pdf",
           "dept": "HR",
-          "size": "214 KB",
+          "size": "136 KB",
           "modified": "2025-07-30",
-          "url": "./docs/HR_Policy_Handbook_v3.pdf"
+          "url": "https://americaabdul.github.io/orbitdocs/pdf/HR_Handbook.pdf"
         }
       ]
     }
