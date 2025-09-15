@@ -9,5 +9,71 @@
     "investmentAmount": "$50M Series A",
     "description": "Usage based AI chat, built for anyone.",
     "tags": ["Series A", "SaaS"]
+  },
+  {
+    "id": "silikon",
+    "code": "SIL",
+    "name": "Silikon",
+    "status": "Active",
+    "category": "AI",
+    "year": 2025,
+    "investmentAmount": "$250M Series C",
+    "description": "Building world-class AI inference silicon chips for faster, cheaper AI workloads.",
+    "tags": ["Series C", "Hardware", "AI"]
+  },
+  {
+    "id": "medicast",
+    "code": "MED",
+    "name": "mediCast",
+    "status": "Active",
+    "category": "Healthcare",
+    "year": 2025,
+    "investmentAmount": "$100M Series B",
+    "description": "Creating secure AI solutions for medical use, ensuring privacy and compliance.",
+    "tags": ["Series B", "Healthcare", "AI"]
+  },
+  {
+    "id": "logis",
+    "code": "LOG",
+    "name": "logis",
+    "status": "Active",
+    "category": "Logistics",
+    "year": 2025,
+    "investmentAmount": "$500M Series F",
+    "description": "Revolutionizing logistics with software that boosts efficiency and reduces costs.",
+    "tags": ["Series F", "Logistics", "SaaS"]
+  },
+  {
+    "id": "horizon-ai",
+    "code": "HOR",
+    "name": "horizon AI",
+    "status": "Active",
+    "category": "Developer Tools",
+    "year": 2025,
+    "investmentAmount": "$150M Series B",
+    "description": "Building AI models specifically designed for coding to empower developers.",
+    "tags": ["Series B", "Developer Tools", "AI"]
+  },
+  {
+    "id": "agi-research",
+    "code": "AGI",
+    "name": "AGI Research Company Official",
+    "status": "Active",
+    "category": "AI",
+    "year": 2025,
+    "investmentAmount": "$30M Series A",
+    "description": "Exploring fundamental questions in AGI for safe, aligned systems.",
+    "tags": ["Series A", "Research", "AI"]
+  },
+  {
+    "id": "monster",
+    "code": "MON",
+    "name": "Monster",
+    "status": "Active",
+    "category": "Developer Tools",
+    "year": 2025,
+    "investmentAmount": "$75M Series A",
+    "description": "Building the simplest way to deploy anything to the web.",
+    "tags": ["Series A", "Developer Tools", "Deployment"]
   }
 ]
